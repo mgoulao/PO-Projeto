@@ -22,19 +22,50 @@ public class NewParser{
 
 	public SchoolManager parseFile(String fileName) throws ImportFileException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-      		String[] lines;
-          String text= "";
-          lines = fileName.split(System.getProperty("line.separator"));
-                        System.out.println(lines.toString());
-          for(int i= 0; i <= lines.toString().length(); i++){
-            text = lines[i].toString();
-            while(lines[i].toString().startsWith("#")){
-              text = text + lines[i].toString();
-              i++;
-            }
-            parseLine(text);
-            text = "";
+      String line;
+      ArrayList<String> text = new ArrayList<String>();
+      String person;
+      while((line= reader.readLine()) != null){
+        text.add(line);
+      }
+      for(int i = 0; i < text.size(); i++){
+        if(text.get(i).startsWith("FUNCIONÁRIO")){
+          person = text.get(i);
+          parseLine(person);
+          person = "";
+        }
+        if(text.get(i).startsWith("DOCENTE")){
+          person = text.get(i);
+          i++;
+          while(text.get(i).startsWith("#")){
+            person += text.get(i+1);
+            i++;
           }
+          parseLine(person);
+          person = "";
+        }
+        if(text.get(i).startsWith("DELEGADO")){
+          person = text.get(i);
+          i++;
+          while(text.get(i).startsWith("#")){
+            person += text.get(i+1);
+            i++;
+          }
+          parseLine(person);
+          person = "";
+        }
+        if(text.get(i).startsWith("ALUNO")){
+          person = text.get(i);
+          i++;
+          while(text.get(i).startsWith("#")){
+            person += text.get(i+1);
+            i++;
+          }
+          parseLine(person);
+          person = "";
+        }
+      }
+
 
     	} catch (IOException ioe) {
       	throw new ImportFileException(ioe);
@@ -63,7 +94,7 @@ public class NewParser{
         		break;
         	
      		default:
-       			throw new ImportFileException("invalid type of line: " + components[0]);
+       			throw new ImportFileException("dei erro no parserLine " + components[0]);
     	}
   	}
 
@@ -96,6 +127,7 @@ public class NewParser{
   			Discipline d = new Discipline(components[i]);
   			disciplines.add(d);
   		}
+
   		_schoolManager.addStudent(representative, id, phoneNumber, name, course, disciplines);
   	}
   	private void parseTeacher(String[] components){
