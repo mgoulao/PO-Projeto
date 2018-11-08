@@ -18,7 +18,6 @@ public class Teacher extends Person{
 
 	public Teacher(int iD, int phoneNumber, String name){
 		super(iD, phoneNumber, name);
-		_courseAndDisciplines = courseAndDisciplines;
 	}
 	
 	public void addProject(String name, String descricao){
@@ -50,7 +49,11 @@ public class Teacher extends Person{
 
 		Course course = school.parseCourse(components[0]);
 		Discipline discipline = course.parseDiscipline(components[1]);
-
+    	
+    	if(!_courseAndDisciplines.containsKey(course)){
+      		_courseAndDisciplines.put(course, new ArrayList<Discipline>());
+    	}
+    	_courseAndDisciplines.get(course).add(discipline);
 		discipline.addTeacher(this);
 	}
 

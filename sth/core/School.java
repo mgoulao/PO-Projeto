@@ -70,11 +70,12 @@ public class School implements java.io.Serializable {
     return _ficheiroAssociado;
   } 
 
-  public void parseCourse(String name){
+  public Course parseCourse(String name){
     Course c = new Course(name);
     if(!_courses.contains(c)){
       _courses.add(c);
     }
+    return c;
   }
   public void addPerson(Person p){
     _persons.add(p);

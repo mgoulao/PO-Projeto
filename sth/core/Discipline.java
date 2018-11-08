@@ -7,7 +7,7 @@ import sth.core.Student;
 import sth.core.Teacher;
 import sth.core.Project;
 
-public class Discipline implements Comparable<Course>, java.io.Serializable{
+public class Discipline implements Comparable<Discipline>, java.io.Serializable{
 	
 	private String _name;
 	//private int _capacity; 

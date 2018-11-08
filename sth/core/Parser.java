@@ -42,7 +42,7 @@ public class Parser {
     int phone;
 
     if (components.length != 4)
-      throw new BadEntryException("Invalid line " + line);
+      throw new BadEntryException("Invalid line " + components);
 
     id = Integer.parseInt(components[1]);
     phone = Integer.parseInt(components[2]);
@@ -68,12 +68,12 @@ public class Parser {
         throw new BadEntryException("Invalid token " + components[0] + "in line describing a person");
      }
 
-    _school.addPerson(person);
+    _school.addPerson(_person);
   }
 
   private void parseContext(String line) {
-    String lineContex = line.substring(2);
+    String lineContext = line.substring(2);
 
-    _person.parseContext(lineContext, school);
+    _person.parseContext(lineContext, _school);
   }
 }

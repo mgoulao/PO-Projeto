@@ -23,7 +23,7 @@ public class Student extends Person{
 	private boolean _representative;
 
 	public Student(int id, int phone, String name, boolean representative){
-		super(iD, phoneNumber, name);
+		super(id, phone, name);
 		_representative = representative;
 	}
 
@@ -37,7 +37,7 @@ public class Student extends Person{
 
 	public void setRepresentative(boolean representative){
 		_representative = representative;
-		_course.addRepresentative(super.getID());
+		_course.addRepresentative(this);
 	}
 	
 	public void submiteProject(String answer){
@@ -77,10 +77,10 @@ public class Student extends Person{
 		}
 
 		Discipline dis = _course.parseDiscipline(components[1]);
-
+		_disciplines.add(dis);
 		dis.enrollStudent(this);
-		if(representative){
-			dis.addRepresentative(this);
+		if(_representative){
+			_course.addRepresentative(this);
 		}
 	}
 

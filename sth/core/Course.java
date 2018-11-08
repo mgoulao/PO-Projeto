@@ -14,7 +14,7 @@ public class Course implements Comparable<Course>, java.io.Serializable{
 	
 	private String _name;
 	private ArrayList<Discipline> _disciplines = new ArrayList<Discipline>();
-	private ArrayList<Integer> _representatives = new ArrayList<Integer>();
+	private ArrayList<Student> _representatives = new ArrayList<Student>();
 	private ArrayList<Student> _students = new ArrayList<Student>();
 
 	public Course(String name){
@@ -33,22 +33,23 @@ public class Course implements Comparable<Course>, java.io.Serializable{
 		_disciplines = disciplines;
 	}
 
-	public void parseDiscipline(String name){
+	public Discipline parseDiscipline(String name){
 		Discipline d = new Discipline(name);
 		if(!_disciplines.contains(d)){
 			_disciplines.add(d);
 		}
+		return d;
 	}
 
-	public void addRepresentative(int id){
-		if(_representatives.size() < 6 && !_representatives.contains(id)){
-			_representatives.add((_representatives.size()+1), id);
+	public void addRepresentative(Student s){
+		if(_representatives.size() < 6 && !_representatives.contains(s)){
+			_representatives.add((_representatives.size()+1), s);
 		}
 	}
 
-	public void removeRepresentative(Integer id){
-		if(_representatives.contains(id)){
-			_representatives.remove(id);
+	public void removeRepresentative(Student s){
+		if(_representatives.contains(s)){
+			_representatives.remove(s);
 		}
 	}
 
