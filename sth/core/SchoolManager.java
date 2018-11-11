@@ -237,6 +237,7 @@ public class SchoolManager implements java.io.Serializable {
     if(discipline == null) {
       throw new NoSuchDisciplineIdException(disciplineName);
     }
+
     for(Student student : discipline.getStudents()) {
       res += student.printPerson();
     }

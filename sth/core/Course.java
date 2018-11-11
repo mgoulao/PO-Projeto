@@ -34,10 +34,13 @@ public class Course implements Comparable<Course>, java.io.Serializable{
 	}
 
 	Discipline parseDiscipline(String name){
-		Discipline d = new Discipline(name);
-		if(!_disciplines.contains(d)){
-			_disciplines.add(d);
+		Discipline d = null;
+		for(Discipline disc : getDisciplines()) {
+			if(disc.getName().equals(name))
+				return disc;
 		}
+		d = new Discipline(name);
+		_disciplines.add(d);
 		return d;
 	}
 
