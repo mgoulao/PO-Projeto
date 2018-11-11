@@ -30,7 +30,7 @@ public class Student extends Person {
 		return _course;
 	}
 
-	public boolean getRepresentative() {
+	public boolean isRepresentative() {
 		return _representative;
 	}
 
@@ -82,7 +82,8 @@ public class Student extends Person {
 		}
 	}
 
-	public String printStudent() {
+	@Override
+	public String printPerson(){
 		if (_representative) {
 			return ("Delegado | " + super.getID() + " " + super.getPhoneNumber() + " " + super.getName());
 		}

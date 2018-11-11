@@ -57,7 +57,8 @@ public class Teacher extends Person{
 		discipline.addTeacher(this);
 	}
 
-	public String printTeacher(){
+	@Override
+	public String printPerson(){
 		return("DOCENTE | " + super.getID() + " " + super.getPhoneNumber() + " " + super.getName()); 
 	}
 }

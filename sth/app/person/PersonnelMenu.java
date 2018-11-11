@@ -12,10 +12,10 @@ public class PersonnelMenu extends Menu {
    */
   public PersonnelMenu(SchoolManager receiver) {
     super(Label.TITLE, new Command<?>[] { //4.2
-        new DoShowPerson(receiver), //4.2.1
-        new DoChangePhoneNumber(receiver), //4.2.2
-        new DoShowAllPersons(receiver), //4.2.3
-        new DoSearchPerson(receiver), //4.2.4
+        new DoShowPerson(receiver), //4.2.1 //TODO
+        new DoChangePhoneNumber(receiver), //4.2.2 //TODO
+        new DoShowAllPersons(receiver), //4.2.3 //TODO
+        new DoSearchPerson(receiver), //4.2.4 //TODO
     });
   }
 

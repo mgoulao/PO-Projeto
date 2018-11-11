@@ -6,7 +6,8 @@ public class Employee extends Person implements Comparable<Employee> , java.io.S
 		super(iD, phoneNumber, name);
 	}
 
-	public String printEmployee(){
+	@Override
+	String printPerson(){
 		return("FUNCIONÁRIO | " + super.getID() + " " + super.getPhoneNumber() + " " + super.getName()); 
 	}
 

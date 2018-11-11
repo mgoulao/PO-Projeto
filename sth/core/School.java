@@ -58,7 +58,6 @@ public class School implements java.io.Serializable {
   }
 
   void addPerson(Person p) {
-    System.out.println(p.getID());
     _users.put(p.getID(), p);
   }
 

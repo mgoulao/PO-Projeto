@@ -2,7 +2,10 @@ package sth.app.person;
 
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.Display;
+import pt.tecnico.po.ui.Input;
+import sth.app.exception.NoSuchPersonException;
 import sth.core.SchoolManager;
+import sth.core.exception.NoSuchPersonIdException;
 
 //FIXME import other classes if needed
 
@@ -11,20 +14,28 @@ import sth.core.SchoolManager;
  */
 public class DoShowPerson extends Command<SchoolManager> {
 
-  //FIXME add input fields if needed
+  Input<Integer> _id;
 
   /**
    * @param receiver
    */
   public DoShowPerson(SchoolManager receiver) {
     super(Label.SHOW_PERSON, receiver);
-    //FIXME initialize input fields if needed
+    // FIXME initialize input fields if needed
+    _id = _form.addIntegerInput(Message.requestPersonId());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
-  public final void execute() {
-    //FIXME implement command
+  public final void execute() throws NoSuchPersonException {
+    _form.parse();
+    int id = _id.value();
+    try {
+      _display.addLine(_receiver.showPerson(id));
+    } catch(NoSuchPersonIdException e) {
+      throw new NoSuchPersonException(id);
+    }
+    _display.display();
   }
 
 }
