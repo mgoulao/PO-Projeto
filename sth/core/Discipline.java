@@ -1,6 +1,7 @@
 package sth.core;
 
 import java.util.List;
+import java.util.TreeSet;
 import java.util.ArrayList;
 
 import sth.core.Student;
@@ -28,23 +29,23 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable{
 		_students.add(a);
 	}
 
-	String getDisciplineName(){
-		return _name;
-	}
-
 	void addTeacher(Teacher d){
 		_teachers.add(d);
 	}
 
-	ArrayList<Teacher> getTeacher(){
+	ArrayList<Teacher> getTeachers(){
 		return _teachers;
 	}
 
-	ArrayList<Student> getStudent(){
-		return _students;
+	TreeSet<Student> getStudents(){
+		TreeSet<Student> students = new TreeSet<>();
+		for(Student student : _students) {
+			students.add(student);
+		}
+		return students;
 	}
 
-	void addProjeto(Project p){
+	void addProject(Project p){
 		_projects.add(p);
 	}
 
@@ -53,6 +54,6 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable{
 	}
 	@Override
 	public int compareTo(Discipline other) {
-		return this._name.compareTo(other.getDisciplineName());	
+		return this._name.compareTo(other.getName());	
 	}
 }

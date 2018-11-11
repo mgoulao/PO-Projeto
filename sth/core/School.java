@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 
 import sth.core.exception.ImportFileException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,14 +60,14 @@ public class School implements java.io.Serializable {
     return users;
   }
 
-  String printAllUsers() {
-    TreeSet<Person> users = getAllUsers();
-    String ret = "";
-
-    for(Person person : users) {
-      ret += person.printPerson();
+  TreeSet<Person> searchPerson(String name) {
+    TreeSet<Person> users = new TreeSet<>();
+    for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
+      Person person = entry.getValue();
+      if(person.getName().startsWith(name))
+        users.add(person);
     }
-     return ret;
+    return users;
   }
 
   void addPerson(Person p) {
@@ -75,6 +76,10 @@ public class School implements java.io.Serializable {
 
   void addCourse(Course course) {
     _courses.add(course);
+  }
+
+  List<Course> getCourses() {
+    return _courses;
   }
 
   Course parseCourse(String name) {

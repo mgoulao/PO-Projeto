@@ -4,28 +4,37 @@ import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import sth.core.SchoolManager;
-
-//FIXME import other classes if needed
+import sth.core.exception.NoSuchDisciplineIdException;
+import sth.app.exception.NoSuchDisciplineException;
 
 /**
  * 4.4.4. Show course students.
  */
 public class DoShowDisciplineStudents extends Command<SchoolManager> {
 
-  //FIXME add input fields if needed
+  private Input<String> _discipline;
 
   /**
    * @param receiver
    */
   public DoShowDisciplineStudents(SchoolManager receiver) {
     super(Label.SHOW_COURSE_STUDENTS, receiver);
-    //FIXME initialize input fields if needed
+    _discipline = _form.addStringInput(Message.requestDisciplineName());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() throws DialogException {
-    //FIXME implement command
+    _form.parse();
+    String discipline = _discipline.value();
+    String ret = "";
+    try {
+      ret = _receiver.showDisciplineStudents(discipline);
+      _display.addLine(ret);
+      _display.display();
+    } catch (NoSuchDisciplineIdException e) {
+      throw new NoSuchDisciplineException(discipline);
+    }
   }
 
 }

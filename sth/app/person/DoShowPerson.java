@@ -7,7 +7,6 @@ import sth.app.exception.NoSuchPersonException;
 import sth.core.SchoolManager;
 import sth.core.exception.NoSuchPersonIdException;
 
-//FIXME import other classes if needed
 
 /**
  * 4.2.1. Show person.
@@ -21,7 +20,6 @@ public class DoShowPerson extends Command<SchoolManager> {
    */
   public DoShowPerson(SchoolManager receiver) {
     super(Label.SHOW_PERSON, receiver);
-    // FIXME initialize input fields if needed
     _id = _form.addIntegerInput(Message.requestPersonId());
   }
 

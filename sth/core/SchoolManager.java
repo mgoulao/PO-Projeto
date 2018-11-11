@@ -2,7 +2,10 @@ package sth.core;
 
 import sth.core.exception.BadEntryException;
 import sth.core.exception.ImportFileException;
+import sth.core.exception.NoSuchDisciplineIdException;
 import sth.core.exception.NoSuchPersonIdException;
+import sth.core.exception.NoSuchProjectIdException;
+
 import java.io.IOException;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -15,7 +18,6 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
 
 import java.util.HashSet;
 import java.util.List;
@@ -104,7 +106,7 @@ public class SchoolManager implements java.io.Serializable {
    */
   public void login(int id) throws NoSuchPersonIdException {
     _user = _school.getPerson(id);
-    if(_user == null) {
+    if (_user == null) {
       throw new NoSuchPersonIdException(id);
     }
 
@@ -135,7 +137,7 @@ public class SchoolManager implements java.io.Serializable {
    * @return true when the currently logged in person is a representative
    */
   public boolean isLoggedUserRepresentative() {
-    if(_user instanceof Student){
+    if (_user instanceof Student) {
       Student student = (Student) _user;
       return student.isRepresentative();
     }
@@ -146,13 +148,98 @@ public class SchoolManager implements java.io.Serializable {
 
   public String showPerson(int id) throws NoSuchPersonIdException {
     Person person = _school.getPerson(id);
-    if(person == null) {
+    if (person == null) {
       throw new NoSuchPersonIdException(id);
     }
     return _school.getPerson(id).printPerson();
   }
 
   public String showAllPersons() {
-    return _school.printAllUsers();
+    TreeSet<Person> users = _school.getAllUsers();
+    String ret = "";
+
+    for (Person person : users) {
+      ret += person.printPerson();
+    }
+    return ret;
+  }
+
+  public String changePhoneNumber(int phoneNumber) {
+    _user.setPhoneNumber(phoneNumber);
+    return _user.printPerson();
+  }
+
+  public String searchPerson(String name) {
+    TreeSet<Person> users = _school.searchPerson(name);
+    String ret = "";
+    for (Person person : users) {
+      ret += person.printPerson();
+    }
+    return ret;
+  }
+
+  public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
+    Discipline discipline = null;
+    Project project = null;
+
+    for (Course course : _school.getCourses()) {
+      for (Discipline disc : course.getDisciplines()) {
+        if (disc.getName().equals(disciplineName)) {
+          discipline = disc;
+        }
+      }
+    }
+
+    if (discipline == null)
+      throw new NoSuchDisciplineIdException(disciplineName);
+
+    for (Project proj : discipline.getProjects()) {
+      if (proj.getName().equals(projectName))
+        return false;
+    }
+
+    discipline.addProject(new Project(projectName));
+    return true;
+  }
+
+  public void closeProject(String disciplineName, String projectName)
+      throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+    Discipline discipline = null;
+    Project project = null;
+
+    for (Course course : _school.getCourses()) {
+      for (Discipline disc : course.getDisciplines()) {
+        if (disc.getName().equals(disciplineName)) {
+          discipline = disc;
+        }
+      }
+    }
+
+    if (discipline == null)
+      throw new NoSuchDisciplineIdException(disciplineName);
+
+    for (Project proj : discipline.getProjects()) {
+      if (proj.getName().equals(projectName)) {
+        project = proj;
+      }
+    }
+
+    if (project == null)
+      throw new NoSuchProjectIdException(projectName);
+
+    project.close();
+  }
+
+  public String showDisciplineStudents(String disciplineName) throws NoSuchDisciplineIdException {
+    Teacher teacher = (Teacher) _user;
+    Discipline discipline = teacher.getDiscipline(disciplineName);
+    String res = "";
+    if(discipline == null) {
+      throw new NoSuchDisciplineIdException(disciplineName);
+    }
+    for(Student student : discipline.getStudents()) {
+      res += student.printPerson();
+    }
+    return res;
   }
 }

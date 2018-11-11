@@ -83,15 +83,15 @@ public class Student extends Person {
 	}
 
 	@Override
-	public String printPerson(){ // ASK: Ordenacao incorrreta para o "A" com assento
+	public String printPerson() { // ASK: Ordenacao incorrreta para o "A" com assento
 		String ret = "";
 		String courseName = _course.getName();
 		if (_representative) {
 			ret = "Delegado|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
 		}
 		ret = "Aluno|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
-		
-		for(Discipline disc : _disciplines) {
+
+		for (Discipline disc : _disciplines) {
 			String discName = disc.getName();
 			ret += "* " + courseName + " - " + discName + "\n";
 		}

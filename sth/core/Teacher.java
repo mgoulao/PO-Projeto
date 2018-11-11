@@ -29,17 +29,27 @@ public class Teacher extends Person{
 		p.close();
 	}
 
-	public TreeMap<Student,Submission> seeResults(Project p){
+	TreeMap<Student,Submission> seeResults(Project p){
 		return p.getSubmissions();
 	}
 
-	public ArrayList<Student> seeStudents(Discipline d){
-		return d.getStudent();
+	TreeSet<Student> seeStudents(Discipline d){
+		return d.getStudents();
 	}
 
-	public void addDiscipline(Discipline d, Course c){
+	void addDiscipline(Discipline d, Course c){
 		_courseAndDisciplines.get(c).add(d);	
 	}
+
+	Discipline getDiscipline(String name) {
+		for(Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
+			for(Discipline discipline : entry.getValue()) {
+				if(discipline.getName().equals(name))
+					return discipline;
+			}
+		}
+		return null;
+	} 
 
 	@Override
 	void parseContext(String lineContext, School school) throws BadEntryException {
