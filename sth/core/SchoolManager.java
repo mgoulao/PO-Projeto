@@ -146,12 +146,8 @@ public class SchoolManager implements java.io.Serializable {
 
   // FIXME implement other methods (in general, one for each command in sth-app)
 
-  public String showPerson(int id) throws NoSuchPersonIdException {
-    Person person = _school.getPerson(id);
-    if (person == null) {
-      throw new NoSuchPersonIdException(id);
-    }
-    return _school.getPerson(id).printPerson();
+  public String showPerson() {
+    return _user.printPerson();
   }
 
   public String showAllPersons() {
@@ -181,12 +177,11 @@ public class SchoolManager implements java.io.Serializable {
   public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
     Discipline discipline = null;
     Project project = null;
+    Teacher teacher = (Teacher) _user;
 
-    for (Course course : _school.getCourses()) {
-      for (Discipline disc : course.getDisciplines()) {
-        if (disc.getName().equals(disciplineName)) {
-          discipline = disc;
-        }
+    for (Discipline disc : teacher.getDisciplines()) {
+      if (disc.getName().equals(disciplineName)) {
+        discipline = disc;
       }
     }
 
@@ -234,11 +229,11 @@ public class SchoolManager implements java.io.Serializable {
     Teacher teacher = (Teacher) _user;
     Discipline discipline = teacher.getDiscipline(disciplineName);
     String res = "";
-    if(discipline == null) {
+    if (discipline == null) {
       throw new NoSuchDisciplineIdException(disciplineName);
     }
 
-    for(Student student : discipline.getStudents()) {
+    for (Student student : discipline.getStudents()) {
       res += student.printPerson();
     }
     return res;

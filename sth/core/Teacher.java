@@ -53,6 +53,16 @@ public class Teacher extends Person implements java.io.Serializable {
 		return null;
 	}
 
+	ArrayList<Discipline> getDisciplines() {
+		ArrayList<Discipline> disciplines = new ArrayList<>();
+		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
+			for (Discipline disc : entry.getValue()) {
+				disciplines.add(disc);
+			}
+		}
+		return disciplines;
+	}
+
 	@Override
 	void parseContext(String lineContext, School school) throws BadEntryException {
 		String components[] = lineContext.split("\\|");

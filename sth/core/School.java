@@ -64,7 +64,7 @@ public class School implements java.io.Serializable {
     TreeSet<Person> users = new TreeSet<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
       Person person = entry.getValue();
-      if(person.getName().startsWith(name))
+      if(person.getName().contains(name))
         users.add(person);
     }
     return users;

@@ -5,7 +5,7 @@ package sth.app.person;
 public interface Label {
 
   /** 4.2. Menu title. */
-  String TITLE = "Menu de gestão de informação pessoal";
+  String TITLE = "Portal Pessoal";
 
   /** 4.2.1. Show person. */
   String SHOW_PERSON = "Mostrar pessoa";

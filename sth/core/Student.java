@@ -89,10 +89,10 @@ public class Student extends Person implements java.io.Serializable {
 		String ret = "";
 		String courseName = _course.getName();
 		if (_representative) {
-			ret = "Delegado|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
+			ret = "DELEGADO|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
+		} else {
+			ret = "ALUNO|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
 		}
-		ret = "Aluno|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
-
 		for (Discipline disc : _disciplines) {
 			String discName = disc.getName();
 			ret += "* " + courseName + " - " + discName + "\n";

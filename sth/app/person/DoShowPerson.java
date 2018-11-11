@@ -20,19 +20,13 @@ public class DoShowPerson extends Command<SchoolManager> {
    */
   public DoShowPerson(SchoolManager receiver) {
     super(Label.SHOW_PERSON, receiver);
-    _id = _form.addIntegerInput(Message.requestPersonId());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
-  public final void execute() throws NoSuchPersonException {
+  public final void execute() {
     _form.parse();
-    int id = _id.value();
-    try {
-      _display.addLine(_receiver.showPerson(id));
-    } catch(NoSuchPersonIdException e) {
-      throw new NoSuchPersonException(id);
-    }
+    _display.addLine(_receiver.showPerson());
     _display.display();
   }
 
