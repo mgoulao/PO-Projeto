@@ -28,7 +28,6 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	}
 
 	void enrollStudent(Student a) {
-		System.out.format("disc: %s, %d\n", _name, _students.size());
 		_students.add(a);
 	}
 
@@ -41,7 +40,6 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	}
 
 	TreeSet<Student> getStudents() {
-		System.out.format("size: %d\n", _teachers.size());
 		TreeSet<Student> students = new TreeSet<>();
 		for (Student student : _students) {
 			students.add(student);
