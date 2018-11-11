@@ -21,19 +21,19 @@ public class Course implements Comparable<Course>, java.io.Serializable{
 		_name = name;
 	}
 
-	public String getCourseName(){
+	public String getName(){
 		return _name;
 	}
 
-	public ArrayList<Discipline> getDisciplines(){
+	ArrayList<Discipline> getDisciplines(){
 		return _disciplines;
 	}
 
-	public void setDisciplines(ArrayList<Discipline> disciplines){
+	void setDisciplines(ArrayList<Discipline> disciplines){
 		_disciplines = disciplines;
 	}
 
-	public Discipline parseDiscipline(String name){
+	Discipline parseDiscipline(String name){
 		Discipline d = new Discipline(name);
 		if(!_disciplines.contains(d)){
 			_disciplines.add(d);
@@ -41,24 +41,24 @@ public class Course implements Comparable<Course>, java.io.Serializable{
 		return d;
 	}
 
-	public void addRepresentative(Student s){
+	void addRepresentative(Student s){
 		if(_representatives.size() < 6 && !_representatives.contains(s)){
-			_representatives.add((_representatives.size()+1), s);
+			_representatives.add(s);
 		}
 	}
 
-	public void removeRepresentative(Student s){
+	void removeRepresentative(Student s){
 		if(_representatives.contains(s)){
 			_representatives.remove(s);
 		}
 	}
 
-	public void addStudent(Student a){
+	void addStudent(Student a){
 		_students.add(a);
 	}
 
 	@Override
 	public int compareTo(Course other) {
-		return this._name.compareTo(other.getCourseName());	
+		return this._name.compareTo(other.getName());	
 	}
 }

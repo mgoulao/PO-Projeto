@@ -4,7 +4,14 @@ import sth.core.exception.BadEntryException;
 import sth.core.exception.ImportFileException;
 import sth.core.exception.NoSuchPersonIdException;
 import java.io.IOException;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.HashSet;
@@ -15,22 +22,22 @@ import sth.core.Teacher;
 import sth.core.Student;
 import sth.core.Employee;
 
-
 //FIXME import other classes if needed
 
 /**
  * The façade class.
  */
-public class SchoolManager implements java.io.Serializable{
+public class SchoolManager implements java.io.Serializable {
 
-  private static final long serialVersionUID = 201811061121L; 
+  private static final long serialVersionUID = 201811061121L;
 
-	private School _school;
+  private School _school;
+  private String _ficheiroAssociado = "";
 
-  //FIXME add object attributes if needed
+  // FIXME add object attributes if needed
 
-  //FIXME implement constructors if needed
-  
+  // FIXME implement constructors if needed
+
   /**
    * @param datafile
    * @throws ImportFileException
@@ -45,24 +52,48 @@ public class SchoolManager implements java.io.Serializable{
     }
   }
 
-  public void doSave(String filename) throws IOException{
-    _school.save(filename);
+  public void doSave(String filename) throws IOException {
+    if (_ficheiroAssociado.equals(""))
+      _ficheiroAssociado = filename; // associa ficheiro se nao existir
+    try {
+      ObjectOutputStream save = new ObjectOutputStream(
+          new BufferedOutputStream(new FileOutputStream(_ficheiroAssociado)));
+      save.writeObject(_school);
+      save.close();
+    }
+    // catch (ImportFileException e ) {throw new
+    // ImportFileException(_ficheiroAssociado);}
+    catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
-  public void doLoad(String filename) throws IOException, ClassNotFoundException{
-    _school.load(filename);
+  public void doLoad(String filename) throws IOException, ClassNotFoundException {
+    try {
+      ObjectInputStream load = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+      _school = (School) load.readObject();
+      load.close();
+      _ficheiroAssociado = filename;
+    }
+    // catch (ImportFileException e) { throw new ImportFileException(filename);}
+    catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
-  public String getFile(){
-    return _school.getFicheiroAssociado();
+  public String getFile() {
+    return _ficheiroAssociado;
   }
 
-  public School getSchool(){
+  public School getSchool() {
     return _school;
   }
+
   /**
    * Do the login of the user with the given identifier.
-
+   * 
    * @param id identifier of the user to login
    * @throws NoSuchPersonIdException if there is no uers with the given identifier
    */
@@ -97,5 +128,5 @@ public class SchoolManager implements java.io.Serializable{
     return false;
   }
 
-  //FIXME implement other methods (in general, one for each command in sth-app)
+  // FIXME implement other methods (in general, one for each command in sth-app)
 }

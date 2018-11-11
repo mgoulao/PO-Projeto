@@ -48,30 +48,30 @@ public class Parser {
     phone = Integer.parseInt(components[2]);
 
     switch (components[0]) {
-      case "FUNCIONÁRIO":
-        _person = new Employee(id, phone, components[3]);
-        break;
+    case "FUNCIONÁRIO":
 
-      case "DOCENTE":
-        _person = new Teacher(id, phone, components[3]);
-        break;
+      _person = new Employee(id, phone, components[3]);
+      break;
 
-      case "ALUNO":
-        _person = new Student(id, phone, components[3], false);
-        break;
+    case "DOCENTE":
+      _person = new Teacher(id, phone, components[3]);
+      break;
 
-      case "DELEGADO":
-        _person = new Student(id, phone, components[3], true);
-        break;
+    case "ALUNO":
+      _person = new Student(id, phone, components[3], false);
+      break;
 
-      default:
-        throw new BadEntryException("Invalid token " + components[0] + "in line describing a person");
-     }
+    case "DELEGADO":
+      _person = new Student(id, phone, components[3], true);
+      break;
 
+    default:
+      throw new BadEntryException("Invalid token " + components[0] + "in line describing a person");
+    }
     _school.addPerson(_person);
   }
 
-  private void parseContext(String line) {
+  private void parseContext(String line) throws BadEntryException {
     String lineContext = line.substring(2);
 
     _person.parseContext(lineContext, _school);
