@@ -2,16 +2,16 @@ package sth.core;
 
 import sth.core.exception.BadEntryException;
 
-public abstract class Person implements java.io.Serializable {
+public abstract class Person implements Comparable<Person>, java.io.Serializable {
 
 	private String _name;
-	private int _iD;
+	private int _id;
 	private int _phoneNumber;
 	private String _type;
 
-	public Person(int iD, int phoneNumber, String name) {
+	public Person(int id, int phoneNumber, String name) {
 		this._name = name;
-		this._iD = iD;
+		this._id = id;
 		this._phoneNumber = phoneNumber;
 	}
 
@@ -24,7 +24,7 @@ public abstract class Person implements java.io.Serializable {
 	}
 
 	public int getID() {
-		return _iD;
+		return _id;
 	}
 
 	public int getPhoneNumber() {
@@ -32,7 +32,7 @@ public abstract class Person implements java.io.Serializable {
 	}
 
 	public void setID(int id) {
-		_iD = id;
+		_id = id;
 	}
 
 	public void setName(String name) {
@@ -44,4 +44,13 @@ public abstract class Person implements java.io.Serializable {
 	}
 
 	abstract String printPerson();
+
+	@Override
+	public int compareTo(Person other) {
+		if(_id < other.getID())
+			return -1;
+		else if (_id == other.getID())
+			return 0;
+		return 1;
+	}
 }

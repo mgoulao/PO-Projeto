@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * School implementation.
@@ -48,13 +50,23 @@ public class School implements java.io.Serializable {
     return _users.get(personId);
   }
 
-  public Collection<Person> getAllUsers() {
-    ArrayList<Person> users = new ArrayList<>();
+  public TreeSet<Person> getAllUsers() {
+    TreeSet<Person> users = new TreeSet<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
       users.add(entry.getValue());
     }
 
     return users;
+  }
+
+  String printAllUsers() {
+    TreeSet<Person> users = getAllUsers();
+    String ret = "";
+
+    for(Person person : users) {
+      ret += person.printPerson();
+    }
+     return ret;
   }
 
   void addPerson(Person p) {

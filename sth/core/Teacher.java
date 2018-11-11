@@ -4,6 +4,7 @@ import sth.core.exception.BadEntryException;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import sth.core.Student;
 
 public class Teacher extends Person{
 
-	private TreeMap<Course,ArrayList<Discipline>>  _courseAndDisciplines = new TreeMap<Course,ArrayList<Discipline>>();
+	private TreeMap<Course,TreeSet<Discipline>>  _courseAndDisciplines = new TreeMap<Course,TreeSet<Discipline>>();
 
 	public Teacher(int iD, int phoneNumber, String name){
 		super(iD, phoneNumber, name);
@@ -51,7 +52,7 @@ public class Teacher extends Person{
 		Discipline discipline = course.parseDiscipline(components[1]);
     	
     	if(!_courseAndDisciplines.containsKey(course)){
-      		_courseAndDisciplines.put(course, new ArrayList<Discipline>());
+      		_courseAndDisciplines.put(course, new TreeSet<Discipline>());
     	}
     	_courseAndDisciplines.get(course).add(discipline);
 		discipline.addTeacher(this);
@@ -59,6 +60,16 @@ public class Teacher extends Person{
 
 	@Override
 	public String printPerson(){
-		return("DOCENTE | " + super.getID() + " " + super.getPhoneNumber() + " " + super.getName()); 
+		String ret = "DOCENTE|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
+
+		for(Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
+			String courseName = entry.getKey().getName();
+			for(Discipline disc : entry.getValue()) {
+				String discName = disc.getName();
+				ret += "* " + courseName + " - " + discName + "\n";
+			}
+		}
+
+		return ret;
 	}
 }

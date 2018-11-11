@@ -20,31 +20,35 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable{
 		/*_capacity = capacity;*/
 	}
 
-	public void enrollStudent(Student a){
-		_students.add(a);
-	}
-
-	public String getDisciplineName(){
+	public String getName() {
 		return _name;
 	}
 
-	public void addTeacher(Teacher d){
+	void enrollStudent(Student a){
+		_students.add(a);
+	}
+
+	String getDisciplineName(){
+		return _name;
+	}
+
+	void addTeacher(Teacher d){
 		_teachers.add(d);
 	}
 
-	public ArrayList<Teacher> getTeacher(){
+	ArrayList<Teacher> getTeacher(){
 		return _teachers;
 	}
 
-	public ArrayList<Student> getStudent(){
+	ArrayList<Student> getStudent(){
 		return _students;
 	}
 
-	public void addProjeto(Project p){
+	void addProjeto(Project p){
 		_projects.add(p);
 	}
 
-	public ArrayList<Project> getProjects(){
+	ArrayList<Project> getProjects(){
 		return _projects;
 	}
 	@Override

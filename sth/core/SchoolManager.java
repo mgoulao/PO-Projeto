@@ -14,6 +14,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
+
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -147,5 +150,9 @@ public class SchoolManager implements java.io.Serializable {
       throw new NoSuchPersonIdException(id);
     }
     return _school.getPerson(id).printPerson();
+  }
+
+  public String showAllPersons() {
+    return _school.printAllUsers();
   }
 }
