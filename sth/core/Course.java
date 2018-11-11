@@ -10,33 +10,35 @@ import java.util.ArrayList;
 import sth.core.Discipline;
 import sth.core.Student;
 
-public class Course implements Comparable<Course>, java.io.Serializable{
-	
+public class Course implements Comparable<Course>, java.io.Serializable {
+
+	private static final long serialVersionUID = 201811111810L;
+
 	private String _name;
 	private ArrayList<Discipline> _disciplines = new ArrayList<Discipline>();
 	private ArrayList<Student> _representatives = new ArrayList<Student>();
 	private ArrayList<Student> _students = new ArrayList<Student>();
 
-	public Course(String name){
+	public Course(String name) {
 		_name = name;
 	}
 
-	public String getName(){
+	public String getName() {
 		return _name;
 	}
 
-	ArrayList<Discipline> getDisciplines(){
+	ArrayList<Discipline> getDisciplines() {
 		return _disciplines;
 	}
 
-	void setDisciplines(ArrayList<Discipline> disciplines){
+	void setDisciplines(ArrayList<Discipline> disciplines) {
 		_disciplines = disciplines;
 	}
 
-	Discipline parseDiscipline(String name){
+	Discipline parseDiscipline(String name) {
 		Discipline d = null;
-		for(Discipline disc : getDisciplines()) {
-			if(disc.getName().equals(name))
+		for (Discipline disc : getDisciplines()) {
+			if (disc.getName().equals(name))
 				return disc;
 		}
 		d = new Discipline(name);
@@ -44,24 +46,24 @@ public class Course implements Comparable<Course>, java.io.Serializable{
 		return d;
 	}
 
-	void addRepresentative(Student s){
-		if(_representatives.size() < 6 && !_representatives.contains(s)){
+	void addRepresentative(Student s) {
+		if (_representatives.size() < 6 && !_representatives.contains(s)) {
 			_representatives.add(s);
 		}
 	}
 
-	void removeRepresentative(Student s){
-		if(_representatives.contains(s)){
+	void removeRepresentative(Student s) {
+		if (_representatives.contains(s)) {
 			_representatives.remove(s);
 		}
 	}
 
-	void addStudent(Student a){
+	void addStudent(Student a) {
 		_students.add(a);
 	}
 
 	@Override
 	public int compareTo(Course other) {
-		return this._name.compareTo(other.getName());	
+		return this._name.compareTo(other.getName());
 	}
 }

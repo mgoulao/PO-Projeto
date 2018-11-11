@@ -1,6 +1,8 @@
 package sth.core;
 
 public class Answer extends Survey implements java.io.Serializable{
+
+	private static final long serialVersionUID = 201811111813L;
 	
 	private String _comment;
 	private int _numberOfHours;

@@ -5,16 +5,18 @@ import java.util.TreeMap;
 
 import sth.core.Answer;
 
-public class Survey{
-	
-	private String _state;
-	private TreeMap<Integer,Answer>  _surveys = new TreeMap<Integer,Answer>();
+public class Survey implements java.io.Serializable {
 
-	public void addSurvey(Answer i, int idStudent){
-		_surveys.put(idStudent, i); 
+	private static final long serialVersionUID = 201811111809L;
+
+	private String _state;
+	private TreeMap<Integer, Answer> _surveys = new TreeMap<Integer, Answer>();
+
+	public void addSurvey(Answer i, int idStudent) {
+		_surveys.put(idStudent, i);
 	}
 
-	public TreeMap<Integer,Answer> getSurveys(){
+	public TreeMap<Integer, Answer> getSurveys() {
 		return _surveys;
 	}
 }

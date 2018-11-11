@@ -15,7 +15,9 @@ import sth.core.Submission;
 import sth.core.Answer;
 import sth.core.Course;
 
-public class Student extends Person {
+public class Student extends Person implements java.io.Serializable {
+
+	private static final long serialVersionUID = 201811111805L;
 
 	private Course _course;
 	private TreeSet<Discipline> _disciplines = new TreeSet<>();

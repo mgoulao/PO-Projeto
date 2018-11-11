@@ -4,6 +4,8 @@ import sth.core.exception.BadEntryException;
 
 public abstract class Person implements Comparable<Person>, java.io.Serializable {
 
+	private static final long serialVersionUID = 201811111802L;
+
 	private String _name;
 	private int _id;
 	private int _phoneNumber;
@@ -47,7 +49,7 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 
 	@Override
 	public int compareTo(Person other) {
-		if(_id < other.getID())
+		if (_id < other.getID())
 			return -1;
 		else if (_id == other.getID())
 			return 0;
