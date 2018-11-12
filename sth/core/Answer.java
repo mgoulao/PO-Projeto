@@ -7,16 +7,16 @@ public class Answer extends Survey implements java.io.Serializable{
 	private String _comment;
 	private int _numberOfHours;
 
-	public Answer(String coment, int hours){
-		_comment = coment;
+	public Answer(String comment, int hours){
+		_comment = comment;
 		_numberOfHours = hours;
 	}
 
-	public String getComment(){
+	public String getMessage(){
 		return _comment;
 	}
 
-	public int getNumberOfHours(){
+	public int getHours(){
 		return _numberOfHours; 
 	}
 }

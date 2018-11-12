@@ -1,7 +1,5 @@
 package sth.core;
 
-//FIXME import other classes if needed
-
 import sth.core.exception.BadEntryException;
 import sth.core.exception.NoSuchPersonIdException;
 
@@ -20,8 +18,6 @@ import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * School implementation.
@@ -47,12 +43,12 @@ public class School implements java.io.Serializable {
     parser.parseFile(filename);
   }
 
-  public Person getPerson(int personId) {
+  Person getPerson(int personId) {
     return _users.get(personId);
   }
 
-  public TreeSet<Person> getAllUsers() {
-    TreeSet<Person> users = new TreeSet<>();
+  ArrayList<Person> getAllUsers() {
+    ArrayList<Person> users = new ArrayList<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
       users.add(entry.getValue());
     }
@@ -60,11 +56,11 @@ public class School implements java.io.Serializable {
     return users;
   }
 
-  TreeSet<Person> searchPerson(String name) {
-    TreeSet<Person> users = new TreeSet<>();
+  ArrayList<Person> searchPerson(String name) {
+    ArrayList<Person> users = new ArrayList<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
       Person person = entry.getValue();
-      if(person.getName().contains(name))
+      if (person.getName().contains(name))
         users.add(person);
     }
     return users;

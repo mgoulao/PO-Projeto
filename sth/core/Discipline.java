@@ -39,12 +39,8 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 		return _teachers;
 	}
 
-	TreeSet<Student> getStudents() {
-		TreeSet<Student> students = new TreeSet<>();
-		for (Student student : _students) {
-			students.add(student);
-		}
-		return students;
+	ArrayList<Student> getStudents() {
+		return _students;
 	}
 
 	void addProject(Project p) {

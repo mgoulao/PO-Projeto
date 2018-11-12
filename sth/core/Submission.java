@@ -1,17 +1,12 @@
 package sth.core;
 
-public class Submission{
-	private String _project;
-	private int _studentID;
+public class Submission {
 
-	public Submission(String proj, int id){
-		_studentID = id;
-		_project = proj;
+	public Submission() {
+		// FIXME: implement
 	}
 
-	public int getID(){
-		return _studentID;
+	public int getStudentID() {
+		// FIXME: implement
 	}
 }
-
- 

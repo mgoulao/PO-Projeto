@@ -28,39 +28,41 @@ public class Student extends Person implements java.io.Serializable {
 		_representative = representative;
 	}
 
-	public Course getCourse() {
+	Course getCourse() {
 		return _course;
 	}
 
-	public boolean isRepresentative() {
+	boolean isRepresentative() {
 		return _representative;
 	}
 
-	public void setRepresentative(boolean representative) {
+	void setRepresentative(boolean representative) {
+		// TODO: Add verification
 		_representative = representative;
 		_course.addRepresentative(this);
 	}
 
-	public void submiteProject(String answer) {
-		Submission submission = new Submission(answer, super.getID());
+	void submiteProject(String answer) {
+		// FIXME: implement
 	}
 
-	public void submitAnswerToSurvey(int numberOfHours, String comment) {
-		Answer answer = new Answer(comment, numberOfHours);
+	void submitAnswerToSurvey(int numberOfHours, String comment) {
+		// FIXME: implement
 	}
 
-	/*
-	 * public void SetSurveyState(Survey i,String state){ if (_representative ==
-	 * true){ i.setEstate(state); } }
-	 */
-
-	public void addSurvey() {
+	public void setSurveyState(Survey i, String state) {
 		if (_representative == true) {
-			Survey i = new Survey();
+			// FIXME: implement
 		}
 	}
 
-	public void addDiscipline(Discipline d) {
+	void addSurvey() {
+		if (_representative == true) {
+			// FIXME: implement
+		}
+	}
+
+	void addDiscipline(Discipline d) {
 		_disciplines.add(d);
 	}
 
@@ -85,7 +87,7 @@ public class Student extends Person implements java.io.Serializable {
 	}
 
 	@Override
-	public String printPerson() { // ASK: Ordenacao incorrreta para o "A" com assento
+	String printPerson() { // ASK: Ordenacao incorrreta para o "A" com assento
 		String ret = "";
 		String courseName = _course.getName();
 		if (_representative) {

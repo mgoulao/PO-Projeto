@@ -1,5 +1,6 @@
 package sth.core;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,14 +10,36 @@ public class Survey implements java.io.Serializable {
 
 	private static final long serialVersionUID = 201811111809L;
 
-	private String _state;
-	private TreeMap<Integer, Answer> _surveys = new TreeMap<Integer, Answer>();
+	private enum SurveySate {
+		ABERTO, FECHADO
+	};
 
-	public void addSurvey(Answer i, int idStudent) {
-		_surveys.put(idStudent, i);
+	private SurveySate _state;
+	private ArrayList<Student> _filledIn = new ArrayList<>();
+	private ArrayList<Answer> _answers = new ArrayList<>();
+
+	Survey() {
+		_state = SurveySate.ABERTO;
 	}
 
-	public TreeMap<Integer, Answer> getSurveys() {
-		return _surveys;
+	void open() {
+		// FIXME: implement
 	}
+
+	void close() {
+		// FIXME: implement
+	}
+
+	void finalizeSurvey() {
+		// FIXME: implement
+	}
+
+	void addAnswer(Student student, int time, String comment) {
+		// FIXME: implement
+	}
+
+	String getResultsFor(Person person) {
+		// FIXME: implement
+	}
+
 }

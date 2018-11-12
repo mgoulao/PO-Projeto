@@ -5,7 +5,6 @@ import sth.core.exception.BadEntryException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.List;
 import java.util.ArrayList;
 
 import sth.core.Course;
@@ -23,19 +22,19 @@ public class Teacher extends Person implements java.io.Serializable {
 		super(iD, phoneNumber, name);
 	}
 
-	public void addProject(String name, String descricao) {
-		Project p = new Project(name, descricao);
+	public void createProject(String name, String descricao) {
+		// FIXME: Implementar entrega final
 	}
 
 	public void closeProject(Project p) {
-		p.close();
+		// FIXME: Implementar entrega final
 	}
 
 	TreeMap<Student, Submission> seeResults(Project p) {
 		return p.getSubmissions();
 	}
 
-	TreeSet<Student> seeStudents(Discipline d) {
+	ArrayList<Student> seeStudents(Discipline d) {
 		return d.getStudents();
 	}
 

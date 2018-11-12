@@ -28,15 +28,15 @@ public class Project implements java.io.Serializable {
 		return _name;
 	}
 
-	public void close() {
+	void close() {
 		_closed = true;
 	}
 
-	public void addProject(Submission s, Student a) {
+	void addSubmission(Submission s, Student a) {
 		_submissions.replace(a, s);
 	}
 
-	public TreeMap<Student, Submission> getSubmissions() {
+	TreeMap<Student, Submission> getSubmissions() {
 		return _submissions;
 	}
 }

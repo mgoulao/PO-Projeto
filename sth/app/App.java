@@ -5,7 +5,6 @@ import static pt.tecnico.po.ui.Dialog.IO;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Menu;
 import sth.core.SchoolManager;
-import sth.core.Person;
 import sth.app.main.MainMenu;
 import sth.app.person.DoLogin;
 import sth.core.exception.BadEntryException;

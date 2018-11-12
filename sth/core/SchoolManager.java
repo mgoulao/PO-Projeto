@@ -22,13 +22,13 @@ import java.util.TreeSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import sth.core.Teacher;
 import sth.core.Student;
 import sth.core.Employee;
 import sth.core.exception.NoSuchPersonIdException;
-
-//FIXME import other classes if needed
 
 /**
  * The façade class.
@@ -40,10 +40,6 @@ public class SchoolManager implements java.io.Serializable {
   private School _school;
   private String _ficheiroAssociado = "";
   private Person _user;
-
-  // FIXME add object attributes if needed
-
-  // FIXME implement constructors if needed
 
   /**
    * @param datafile
@@ -67,10 +63,9 @@ public class SchoolManager implements java.io.Serializable {
           new BufferedOutputStream(new FileOutputStream(_ficheiroAssociado)));
       save.writeObject(_school);
       save.close();
-    }
-    // catch (ImportFileException e ) {throw new
-    // ImportFileException(_ficheiroAssociado);}
-    catch (IOException e) {
+    } catch (ImportFileException e) {
+      throw new ImportFileException(_ficheiroAssociado);
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -151,7 +146,17 @@ public class SchoolManager implements java.io.Serializable {
   }
 
   public String showAllPersons() {
-    TreeSet<Person> users = _school.getAllUsers();
+    ArrayList<Person> users = _school.getAllUsers();
+    Collections.sort(users, new Comparator<Person>() {
+      @Override
+      public int compare(Person a, Person b) {
+        if (a.getID() < b.getID())
+          return -1;
+        else if (a.getID() == b.getID())
+          return 0;
+        return 1;
+      }
+    });
     String ret = "";
 
     for (Person person : users) {
@@ -166,7 +171,13 @@ public class SchoolManager implements java.io.Serializable {
   }
 
   public String searchPerson(String name) {
-    TreeSet<Person> users = _school.searchPerson(name);
+    ArrayList<Person> users = _school.searchPerson(name);
+    Collections.sort(users, new Comparator<Person>() {
+      @Override
+      public int compare(Person a, Person b) {
+        return a.getName().compareTo(b.getName());
+      }
+    });
     String ret = "";
     for (Person person : users) {
       ret += person.printPerson();
@@ -176,7 +187,6 @@ public class SchoolManager implements java.io.Serializable {
 
   public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
     Discipline discipline = null;
-    Project project = null;
     Teacher teacher = (Teacher) _user;
 
     for (Discipline disc : teacher.getDisciplines()) {
