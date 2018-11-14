@@ -18,30 +18,59 @@ public class Teacher extends Person implements java.io.Serializable {
 
 	private TreeMap<Course, TreeSet<Discipline>> _courseAndDisciplines = new TreeMap<Course, TreeSet<Discipline>>();
 
+	/**
+	 * @param iD
+	 * @param phoneNumber
+	 * @param name
+	 */
 	public Teacher(int iD, int phoneNumber, String name) {
 		super(iD, phoneNumber, name);
 	}
 
+	/**
+	 * @param name
+	 * @param descricao
+	 */
 	public void createProject(String name, String descricao) {
 		// FIXME: Implementar entrega final
 	}
 
+	/**
+	 * @param p
+	 */
 	public void closeProject(Project p) {
 		// FIXME: Implementar entrega final
 	}
 
+	/**
+	 * @param p
+	 * @return Map with submissions
+	 */
 	TreeMap<Student, Submission> seeResults(Project p) {
 		return p.getSubmissions();
 	}
 
+	/**
+	 * @param d
+	 * @return List with all discipline students
+	 */
 	ArrayList<Student> seeStudents(Discipline d) {
 		return d.getStudents();
 	}
 
+	/**
+	 * @param d
+	 * @param c
+	 */
 	void addDiscipline(Discipline d, Course c) {
 		_courseAndDisciplines.get(c).add(d);
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @return discipline with the unique name
+	 */
 	Discipline getDiscipline(String name) {
 		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
 			for (Discipline discipline : entry.getValue()) {
@@ -52,6 +81,9 @@ public class Teacher extends Person implements java.io.Serializable {
 		return null;
 	}
 
+	/**
+	 * @return List with all discipline teached
+	 */
 	ArrayList<Discipline> getDisciplines() {
 		ArrayList<Discipline> disciplines = new ArrayList<>();
 		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
@@ -62,6 +94,11 @@ public class Teacher extends Person implements java.io.Serializable {
 		return disciplines;
 	}
 
+	/**
+	 * @param lineContext
+	 * @param school
+	 * @throws BadEntryException
+	 */
 	@Override
 	void parseContext(String lineContext, School school) throws BadEntryException {
 		String components[] = lineContext.split("\\|");
@@ -80,8 +117,8 @@ public class Teacher extends Person implements java.io.Serializable {
 	}
 
 	@Override
-	public String printPerson() {
-		String ret = "DOCENTE|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
+	public String toString() {
+		String ret = "DOCENTE|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
 
 		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
 			String courseName = entry.getKey().getName();

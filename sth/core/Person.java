@@ -43,25 +43,34 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	}
 
 	/**
-	 * @return
+	 * @return phone number
 	 */
 	public int getPhoneNumber() {
 		return _phoneNumber;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setID(int id) {
 		_id = id;
 	}
 
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		_name = name;
 	}
 
+	/**
+	 * @param context
+	 * @param school
+	 * @throws BadEntryException
+	 */
 	void parseContext(String context, School school) throws BadEntryException {
 		throw new BadEntryException("Should not have extra context: " + context);
 	}
-
-	abstract String printPerson();
 
 	@Override
 	public int compareTo(Person other) {

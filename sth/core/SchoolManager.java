@@ -164,7 +164,7 @@ public class SchoolManager implements java.io.Serializable {
    * @return Person string
    */
   public String showPerson() {
-    return _user.printPerson();
+    return _user.toString();
   }
 
   /** 
@@ -185,7 +185,7 @@ public class SchoolManager implements java.io.Serializable {
     String ret = "";
 
     for (Person person : users) {
-      ret += person.printPerson();
+      ret += person.toString();
     }
     return ret;
   }
@@ -195,7 +195,7 @@ public class SchoolManager implements java.io.Serializable {
    */
   public String changePhoneNumber(int phoneNumber) {
     _user.setPhoneNumber(phoneNumber);
-    return _user.printPerson();
+    return _user.toString();
   }
 
   /** 
@@ -212,7 +212,7 @@ public class SchoolManager implements java.io.Serializable {
     });
     String ret = "";
     for (Person person : users) {
-      ret += person.printPerson();
+      ret += person.toString();
     }
     return ret;
   }
@@ -290,7 +290,7 @@ public class SchoolManager implements java.io.Serializable {
     }
 
     for (Student student : discipline.getStudents()) {
-      res += student.printPerson();
+      res += student.toString();
     }
     return res;
   }

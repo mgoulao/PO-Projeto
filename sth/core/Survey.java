@@ -18,26 +18,47 @@ public class Survey implements java.io.Serializable {
 	private ArrayList<Student> _filledIn = new ArrayList<>();
 	private ArrayList<Answer> _answers = new ArrayList<>();
 
+	/**
+	 * Survey constructer
+	 */
 	Survey() {
 		_state = SurveySate.ABERTO;
 	}
 
+	/**
+	 * open survey
+	 */
 	void open() {
 		// FIXME: implement
 	}
 
+	/**
+	 * close survey
+	 */
 	void close() {
 		// FIXME: implement
 	}
 
+	/**
+	 * finalize survey
+	 */
 	void finalizeSurvey() {
 		// FIXME: implement
 	}
 
+	/**
+	 * @param student
+	 * @param time
+	 * @param comment
+	 */
 	void addAnswer(Student student, int time, String comment) {
 		// FIXME: implement
 	}
 
+	/**
+	 * @param person
+	 * @return survey results
+	 */
 	String getResultsFor(Person person) {
 		// FIXME: implement
 		return "";

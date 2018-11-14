@@ -9,7 +9,7 @@ public class Employee extends Person implements java.io.Serializable {
 	}
 
 	@Override
-	String printPerson() {
+	public String toString() {
 		return ("FUNCIONÁRIO|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n");
 	}
 

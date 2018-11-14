@@ -18,35 +18,59 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	private ArrayList<Teacher> _teachers = new ArrayList<Teacher>();
 	private ArrayList<Project> _projects = new ArrayList<Project>();
 
+	/**
+	 * @param name
+	 */
 	public Discipline(String name/* , int capacity */) {
 		_name = name;
 		/* _capacity = capacity; */
 	}
 
+	/**
+	 * @return name
+	 */
 	public String getName() {
 		return _name;
 	}
 
-	void enrollStudent(Student a) {
-		_students.add(a);
+	/**
+	 * @param student
+	 */
+	void enrollStudent(Student student) {
+		_students.add(student);
 	}
 
-	void addTeacher(Teacher d) {
-		_teachers.add(d);
+	/**
+	 * @param teacher
+	 */
+	void addTeacher(Teacher teacher) {
+		_teachers.add(teacher);
 	}
 
+	/**
+	 * @return List with discipline teachers
+	 */
 	ArrayList<Teacher> getTeachers() {
 		return _teachers;
 	}
 
+	/**
+	 * @return List with discipline students
+	 */
 	ArrayList<Student> getStudents() {
 		return _students;
 	}
 
+	/**
+	 * @param p
+	 */
 	void addProject(Project p) {
 		_projects.add(p);
 	}
 
+	/**
+	 * @return List with discipline projects
+	 */
 	ArrayList<Project> getProjects() {
 		return _projects;
 	}

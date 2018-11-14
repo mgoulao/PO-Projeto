@@ -23,45 +23,76 @@ public class Student extends Person implements java.io.Serializable {
 	private TreeSet<Discipline> _disciplines = new TreeSet<>();
 	private boolean _representative;
 
+	/**
+	 * @param id
+	 * @param phone
+	 * @param name
+	 * @param representative
+	 */
 	public Student(int id, int phone, String name, boolean representative) {
 		super(id, phone, name);
 		_representative = representative;
 	}
 
+	/**
+	 * @return student course
+	 */
 	Course getCourse() {
 		return _course;
 	}
 
+	/**
+	 * @return true if student is representative of his course
+	 */
 	boolean isRepresentative() {
 		return _representative;
 	}
 
+	/**
+	 * @param representative
+	 */
 	void setRepresentative(boolean representative) {
-		// TODO: Add verification
-		_representative = representative;
-		_course.addRepresentative(this);
+		if(_course.addRepresentative(this))
+			_representative = representative;
 	}
 
+	/**
+	 * @param answer
+	 */
 	void submiteProject(String answer) {
 		// FIXME: implement
 	}
 
+	/**
+	 * @param numberOfHours
+	 * @param comment
+	 */
 	void submitAnswerToSurvey(int numberOfHours, String comment) {
 		// FIXME: implement
 	}
 
-	public void setSurveyState(Survey i, String state) {
+	/**
+	 * @param survey
+	 * @param state
+	 */
+	public void setSurveyState(Survey survey, String state) {
 		if (_representative == true) {
 			// FIXME: implement
 		}
 	}
 
+	/**
+	 * Add a survey
+	 */
 	void addSurvey() {
 		if (_representative == true) {
 			// FIXME: implement
 		}
 	}
 
+	/**
+	 * @param d
+	 */
 	void addDiscipline(Discipline d) {
 		_disciplines.add(d);
 	}
@@ -87,13 +118,13 @@ public class Student extends Person implements java.io.Serializable {
 	}
 
 	@Override
-	String printPerson() { // ASK: Ordenacao incorrreta para o "A" com assento
+	public String toString() {
 		String ret = "";
 		String courseName = _course.getName();
 		if (_representative) {
-			ret = "DELEGADO|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
+			ret = "DELEGADO|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
 		} else {
-			ret = "ALUNO|" + super.getID() + "|" + super.getPhoneNumber() + "|" + super.getName() + "\n";
+			ret = "ALUNO|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
 		}
 		for (Discipline disc : _disciplines) {
 			String discName = disc.getName();

@@ -16,10 +16,18 @@ public class Parser {
   private School _school;
   private Person _person;
 
+  /**
+   * @param s
+   */
   Parser(School s) {
     _school = s;
   }
 
+  /**
+   * @param fileName
+   * @throws IOException
+   * @throws BadEntryException
+   */
   void parseFile(String fileName) throws IOException, BadEntryException {
     try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
       String line;
@@ -29,6 +37,10 @@ public class Parser {
     }
   }
 
+  /**
+   * @param line
+   * @throws BadEntryException
+   */
   private void parseLine(String line) throws BadEntryException {
     if (line.startsWith("#"))
       parseContext(line);
@@ -36,6 +48,10 @@ public class Parser {
       parseHeaderPerson(line);
   }
 
+  /**
+   * @param header
+   * @throws BadEntryException
+   */
   private void parseHeaderPerson(String header) throws BadEntryException {
     String[] components = header.split("\\|");
     int id;
@@ -71,6 +87,10 @@ public class Parser {
     _school.addPerson(_person);
   }
 
+  /**
+   * @param line
+   * @throws BadEntryException
+   */
   private void parseContext(String line) throws BadEntryException {
     String lineContext = line.substring(2);
 
