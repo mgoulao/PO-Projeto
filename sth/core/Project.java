@@ -15,27 +15,48 @@ public class Project implements java.io.Serializable {
 	private boolean _closed;
 	private TreeMap<Student, Submission> _submissions = new TreeMap<Student, Submission>();
 
+	/**
+	 * @param name
+	 * @param description
+	 */
 	public Project(String name, String description) {
 		_name = name;
 		_description = description;
 	}
 
+	/**
+	 * @param name
+	 */
 	public Project(String name) {
 		_name = name;
 	}
 
+
+	/** 
+	 * @return name
+	 */
 	public String getName() {
 		return _name;
 	}
 
+	/**
+	 * Closes project
+	 */
 	void close() {
 		_closed = true;
 	}
 
+	/**
+	 * @param s
+	 * @param a
+	 */
 	void addSubmission(Submission s, Student a) {
 		_submissions.replace(a, s);
 	}
 
+	/**
+	 * @return All submissions
+	 */
 	TreeMap<Student, Submission> getSubmissions() {
 		return _submissions;
 	}

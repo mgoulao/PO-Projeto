@@ -43,10 +43,17 @@ public class School implements java.io.Serializable {
     parser.parseFile(filename);
   }
 
+  /**
+   * @param personId
+   * @return Person
+   */
   Person getPerson(int personId) {
     return _users.get(personId);
   }
 
+  /**
+   * @return List with all users
+   */
   ArrayList<Person> getAllUsers() {
     ArrayList<Person> users = new ArrayList<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
@@ -56,6 +63,10 @@ public class School implements java.io.Serializable {
     return users;
   }
 
+  /**
+   * @param name
+   * @return List with all users with the name
+   */
   ArrayList<Person> searchPerson(String name) {
     ArrayList<Person> users = new ArrayList<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
@@ -66,18 +77,31 @@ public class School implements java.io.Serializable {
     return users;
   }
 
+  /**
+   * @param p
+   */
   void addPerson(Person p) {
     _users.put(p.getID(), p);
   }
 
+  /**
+   * @param course
+   */
   void addCourse(Course course) {
     _courses.add(course);
   }
 
+  /**
+   * @return List with all courses
+   */
   List<Course> getCourses() {
     return _courses;
   }
 
+  /**
+   * @param name
+   * @return Course with the unique name
+   */
   Course parseCourse(String name) {
     Course course = null;
 

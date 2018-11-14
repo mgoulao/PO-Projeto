@@ -44,7 +44,8 @@ public class SchoolManager implements java.io.Serializable {
   /**
    * @param datafile
    * @throws ImportFileException
-   * @throws InvalidCourseSelectionException
+   * @throws IOException
+   * @throws BadEntryException
    */
   public void importFile(String datafile) throws ImportFileException, IOException, BadEntryException {
     _school = new School();
@@ -53,6 +54,8 @@ public class SchoolManager implements java.io.Serializable {
 
   /**
    * @param filename
+   * @throws IOException
+   * @throws FileNotFoundException
    */
   public void doSave(String filename) throws IOException, FileNotFoundException {
     if (_ficheiroAssociado.isEmpty())
@@ -63,6 +66,12 @@ public class SchoolManager implements java.io.Serializable {
     save.close();
   }
 
+  /**
+   * @param filename
+   * @throws IOException
+   * @throws ClassNotFoundException
+   * @throws FileNotFoundException
+   */
   public void doLoad(String filename) throws IOException, ClassNotFoundException, FileNotFoundException {
     ObjectInputStream load = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
     _school = (School) load.readObject();
@@ -70,10 +79,16 @@ public class SchoolManager implements java.io.Serializable {
     _ficheiroAssociado = filename;
   }
 
+  /**
+   * @return associated object file name 
+   */
   public String getFile() {
-    System.out.println("---> " + _ficheiroAssociado);
     return _ficheiroAssociado;
   }
+
+  /**
+   * @return School
+   */
 
   public School getSchool() {
     return _school;
@@ -86,7 +101,7 @@ public class SchoolManager implements java.io.Serializable {
    * @throws NoSuchPersonIdException if there is no uers with the given identifier
    */
   public void login(int id) throws NoSuchPersonIdException {
-    Person temp =  _school.getPerson(id);
+    Person temp = _school.getPerson(id);
     if (temp == null)
       throw new NoSuchPersonIdException(id);
     else
@@ -126,10 +141,35 @@ public class SchoolManager implements java.io.Serializable {
     return false;
   }
 
+  /**
+   * Tries to find the user id in the object file.
+   * 
+   * @param id identifier of the user to login
+   * @throws NoSuchPersonIdException if there is no uers with the given identifier
+   * @throws FileNotFoundException
+   * @throws IOException
+   * @throws ClassNotFoundException
+   */
+  public void findPersonIdInFile(String filename)
+      throws NoSuchPersonIdException, FileNotFoundException, IOException, ClassNotFoundException {
+    ObjectInputStream load = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+    School school = (School) load.readObject();
+    Person person = school.getPerson(_user.getID());
+    load.close();
+    if(person == null)
+        throw new NoSuchPersonIdException(_user.getID());
+  }
+
+  /** 
+   * @return Person string
+   */
   public String showPerson() {
     return _user.printPerson();
   }
 
+  /** 
+   * @return String with all School users 
+   */
   public String showAllPersons() {
     ArrayList<Person> users = _school.getAllUsers();
     Collections.sort(users, new Comparator<Person>() {
@@ -150,11 +190,18 @@ public class SchoolManager implements java.io.Serializable {
     return ret;
   }
 
+  /** 
+   * @return Person String with the new phone number
+   */
   public String changePhoneNumber(int phoneNumber) {
     _user.setPhoneNumber(phoneNumber);
     return _user.printPerson();
   }
 
+  /** 
+   * @param name
+   * @return String with all users that have the name
+   */
   public String searchPerson(String name) {
     ArrayList<Person> users = _school.searchPerson(name);
     Collections.sort(users, new Comparator<Person>() {
@@ -170,6 +217,12 @@ public class SchoolManager implements java.io.Serializable {
     return ret;
   }
 
+  /** 
+   * @param disciplineName
+   * @param projectName
+   * @return true if the project was created
+   * @throws NoSuchDisciplineIdException
+   */
   public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
     Discipline discipline = null;
     Teacher teacher = (Teacher) _user;
@@ -192,6 +245,10 @@ public class SchoolManager implements java.io.Serializable {
     return true;
   }
 
+  /** 
+   * @param disciplineName
+   * @param projectName
+   */
   public void closeProject(String disciplineName, String projectName)
       throws NoSuchDisciplineIdException, NoSuchProjectIdException {
     Discipline discipline = null;
@@ -220,6 +277,10 @@ public class SchoolManager implements java.io.Serializable {
     project.close();
   }
 
+  /** 
+   * @param disciplineName
+   * @return string with all enrolled students 
+   */
   public String showDisciplineStudents(String disciplineName) throws NoSuchDisciplineIdException {
     Teacher teacher = (Teacher) _user;
     Discipline discipline = teacher.getDiscipline(disciplineName);

@@ -27,35 +27,22 @@ public class DoOpen extends Command<SchoolManager> {
   public DoOpen(SchoolManager receiver) {
     super(Label.OPEN, receiver);
     _file = _form.addStringInput(Message.openFile());
-    _login = _form.addIntegerInput(sth.app.person.Message.requestLoginId());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() throws DialogException {
-    String previousFile = _receiver.getFile();
     _form.parse();
 
     try {
+      _receiver.findPersonIdInFile(_file.value());
       _receiver.doLoad(_file.value());
+    } catch (NoSuchPersonIdException e) {
+      throw new NoSuchPersonException(e.getId());
     } catch (FileNotFoundException fnfe) {
       _display.popup(Message.fileNotFound());
     } catch (ClassNotFoundException | IOException e) {
       e.printStackTrace();
-    }
-
-    
-    try {
-      _receiver.login(_login.value());
-    } catch (NoSuchPersonIdException e) {
-      try {
-        _receiver.doLoad(previousFile);
-      } catch (FileNotFoundException fnfe) {
-        _display.popup(Message.fileNotFound());
-      } catch (ClassNotFoundException | IOException exc) {
-        exc.printStackTrace();
-      }
-      throw new NoSuchPersonException(_login.value());
     }
 
   }

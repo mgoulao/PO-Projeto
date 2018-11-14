@@ -9,26 +9,42 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	private String _name;
 	private int _id;
 	private int _phoneNumber;
-	private String _type;
 
+	/**
+	 * @param id
+	 * @param phoneNumber
+	 * @param name
+	 */
 	public Person(int id, int phoneNumber, String name) {
 		this._name = name;
 		this._id = id;
 		this._phoneNumber = phoneNumber;
 	}
 
+	/**
+	 * @param phoneNumber
+	 */
 	public void setPhoneNumber(int phoneNumber) {
 		_phoneNumber = phoneNumber;
 	}
 
+	/**
+	 * @return name
+	 */
 	public String getName() {
 		return _name;
 	}
 
+	/**
+	 * @return int - id
+	 */
 	public int getID() {
 		return _id;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getPhoneNumber() {
 		return _phoneNumber;
 	}
