@@ -46,46 +46,32 @@ public class SchoolManager implements java.io.Serializable {
    * @throws ImportFileException
    * @throws InvalidCourseSelectionException
    */
-  public void importFile(String datafile) throws IOException, BadEntryException, ImportFileException {
-    try {
-      _school = new School();
-      _school.importFile(datafile);
-    } catch (IOException | BadEntryException e) {
-      throw new ImportFileException(e);
-    }
+  public void importFile(String datafile) throws ImportFileException, IOException, BadEntryException {
+    _school = new School();
+    _school.importFile(datafile);
   }
 
-  public void doSave(String filename) throws IOException {
-    if (_ficheiroAssociado.equals(""))
-      _ficheiroAssociado = filename; // associa ficheiro se nao existir
-    try {
-      ObjectOutputStream save = new ObjectOutputStream(
-          new BufferedOutputStream(new FileOutputStream(_ficheiroAssociado)));
-      save.writeObject(_school);
-      save.close();
-    } catch (ImportFileException e) {
-      throw new ImportFileException(_ficheiroAssociado);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void doLoad(String filename) throws IOException, ClassNotFoundException {
-    try {
-      ObjectInputStream load = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
-      _school = (School) load.readObject();
-      load.close();
+  /**
+   * @param filename
+   */
+  public void doSave(String filename) throws IOException, FileNotFoundException {
+    if (_ficheiroAssociado.isEmpty())
       _ficheiroAssociado = filename;
-    }
-    // catch (ImportFileException e) { throw new ImportFileException(filename);}
-    catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
+    ObjectOutputStream save = new ObjectOutputStream(
+        new BufferedOutputStream(new FileOutputStream(_ficheiroAssociado)));
+    save.writeObject(_school);
+    save.close();
+  }
+
+  public void doLoad(String filename) throws IOException, ClassNotFoundException, FileNotFoundException {
+    ObjectInputStream load = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+    _school = (School) load.readObject();
+    load.close();
+    _ficheiroAssociado = filename;
   }
 
   public String getFile() {
+    System.out.println("---> " + _ficheiroAssociado);
     return _ficheiroAssociado;
   }
 
@@ -100,10 +86,11 @@ public class SchoolManager implements java.io.Serializable {
    * @throws NoSuchPersonIdException if there is no uers with the given identifier
    */
   public void login(int id) throws NoSuchPersonIdException {
-    _user = _school.getPerson(id);
-    if (_user == null) {
+    Person temp =  _school.getPerson(id);
+    if (temp == null)
       throw new NoSuchPersonIdException(id);
-    }
+    else
+      _user = temp;
 
   }
 
@@ -138,8 +125,6 @@ public class SchoolManager implements java.io.Serializable {
     }
     return false;
   }
-
-  // FIXME implement other methods (in general, one for each command in sth-app)
 
   public String showPerson() {
     return _user.printPerson();

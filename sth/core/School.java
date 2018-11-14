@@ -38,7 +38,7 @@ public class School implements java.io.Serializable {
    * @throws BadEntryException
    * @throws IOException
    */
-  void importFile(String filename) throws IOException, BadEntryException, ImportFileException {
+  void importFile(String filename) throws IOException, BadEntryException {
     Parser parser = new Parser(this);
     parser.parseFile(filename);
   }

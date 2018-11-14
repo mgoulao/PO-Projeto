@@ -40,6 +40,7 @@ public class Survey implements java.io.Serializable {
 
 	String getResultsFor(Person person) {
 		// FIXME: implement
+		return "";
 	}
 
 }

@@ -8,5 +8,6 @@ public class Submission {
 
 	public int getStudentID() {
 		// FIXME: implement
+		return 0;
 	}
 }
