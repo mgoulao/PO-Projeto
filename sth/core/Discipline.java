@@ -1,6 +1,8 @@
 package sth.core;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.ArrayList;
 
@@ -13,17 +15,17 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	private static final long serialVersionUID = 201811111808L;
 
 	private String _name;
-	// private int _capacity;
-	private ArrayList<Student> _students = new ArrayList<Student>();
-	private ArrayList<Teacher> _teachers = new ArrayList<Teacher>();
-	private ArrayList<Project> _projects = new ArrayList<Project>();
+	private int _capacity;
+	private List<Student> _students = new ArrayList<Student>();
+	private List<Teacher> _teachers = new ArrayList<Teacher>();
+	private Map<String, Project> _projects = new HashMap<>();
 
 	/**
 	 * @param name
 	 */
-	public Discipline(String name/* , int capacity */) {
+	public Discipline(String name) {
 		_name = name;
-		/* _capacity = capacity; */
+		_capacity = 200;
 	}
 
 	/**
@@ -37,7 +39,8 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	 * @param student
 	 */
 	void enrollStudent(Student student) {
-		_students.add(student);
+		if (_students.size() < _capacity)
+			_students.add(student);
 	}
 
 	/**
@@ -50,14 +53,14 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	/**
 	 * @return List with discipline teachers
 	 */
-	ArrayList<Teacher> getTeachers() {
+	List<Teacher> getTeachers() {
 		return _teachers;
 	}
 
 	/**
 	 * @return List with discipline students
 	 */
-	ArrayList<Student> getStudents() {
+	List<Student> getStudents() {
 		return _students;
 	}
 
@@ -65,13 +68,13 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	 * @param p
 	 */
 	void addProject(Project p) {
-		_projects.add(p);
+		_projects.put(p.getName(), p);
 	}
 
 	/**
 	 * @return List with discipline projects
 	 */
-	ArrayList<Project> getProjects() {
+	Map<String, Project> getProjects() {
 		return _projects;
 	}
 

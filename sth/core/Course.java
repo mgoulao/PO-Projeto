@@ -1,7 +1,7 @@
 package sth.core;
 
 import java.util.Collections;
-
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.List;
@@ -15,9 +15,9 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 	private static final long serialVersionUID = 201811111810L;
 
 	private String _name;
-	private ArrayList<Discipline> _disciplines = new ArrayList<Discipline>();
-	private ArrayList<Student> _representatives = new ArrayList<Student>();
-	private ArrayList<Student> _students = new ArrayList<Student>();
+	private Map<String, Discipline> _disciplines = new HashMap<>();
+	private List<Student> _representatives = new ArrayList<>();
+	private List<Student> _students = new ArrayList<>();
 
 	/**
 	 * @param name
@@ -36,15 +36,19 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 	/**
 	 * @return List course disciplines
 	 */
-	ArrayList<Discipline> getDisciplines() {
-		return _disciplines;
+	List<Discipline> getDisciplines() {
+		List<Discipline> disciplines = new ArrayList<>();
+		for(Map.Entry<String, Discipline> entry : _disciplines.entrySet())
+			disciplines.add(entry.getValue());
+
+		return disciplines;
 	}
 
 	/**
 	 * @param disciplines
 	 */
-	void setDisciplines(ArrayList<Discipline> disciplines) {
-		_disciplines = disciplines;
+	void addDiscipline(Discipline discipline) {
+		_disciplines.put(discipline.getName(), discipline);
 	}
 
 	/**
@@ -58,7 +62,7 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 				return disc;
 		}
 		d = new Discipline(name);
-		_disciplines.add(d);
+		addDiscipline(d);
 		return d;
 	}
 

@@ -63,6 +63,11 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		_name = name;
 	}
 
+	@Override
+	public String toString() {
+		return getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
+	}
+
 	/**
 	 * @param context
 	 * @param school

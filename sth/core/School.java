@@ -27,11 +27,9 @@ public class School implements java.io.Serializable {
   /** Serial number for serialization. */
   private static final long serialVersionUID = 201810051538L;
 
-  // FIXME define object fields (attributes and, possibly, associations)
-  private ArrayList<Course> _courses = new ArrayList<Course>();
+  private List<Course> _courses = new ArrayList<Course>();
   private HashMap<Integer, Person> _users = new HashMap<>();
 
-  // FIXME implement constructors if needed
 
   /**
    * @param filename
@@ -54,8 +52,8 @@ public class School implements java.io.Serializable {
   /**
    * @return List with all users
    */
-  ArrayList<Person> getAllUsers() {
-    ArrayList<Person> users = new ArrayList<>();
+  List<Person> getAllUsers() {
+    List<Person> users = new ArrayList<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
       users.add(entry.getValue());
     }
@@ -67,8 +65,8 @@ public class School implements java.io.Serializable {
    * @param name
    * @return List with all users with the name
    */
-  ArrayList<Person> searchPerson(String name) {
-    ArrayList<Person> users = new ArrayList<>();
+  List<Person> searchPerson(String name) {
+    List<Person> users = new ArrayList<>();
     for (Map.Entry<Integer, Person> entry : _users.entrySet()) {
       Person person = entry.getValue();
       if (person.getName().contains(name))

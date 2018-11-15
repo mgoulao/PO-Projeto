@@ -80,7 +80,7 @@ public class SchoolManager implements java.io.Serializable {
   }
 
   /**
-   * @return associated object file name 
+   * @return associated object file name
    */
   public String getFile() {
     return _ficheiroAssociado;
@@ -156,22 +156,22 @@ public class SchoolManager implements java.io.Serializable {
     School school = (School) load.readObject();
     Person person = school.getPerson(_user.getID());
     load.close();
-    if(person == null)
-        throw new NoSuchPersonIdException(_user.getID());
+    if (person == null)
+      throw new NoSuchPersonIdException(_user.getID());
   }
 
-  /** 
+  /**
    * @return Person string
    */
   public String showPerson() {
     return _user.toString();
   }
 
-  /** 
-   * @return String with all School users 
+  /**
+   * @return String with all School users
    */
   public String showAllPersons() {
-    ArrayList<Person> users = _school.getAllUsers();
+    List<Person> users = _school.getAllUsers();
     Collections.sort(users, new Comparator<Person>() {
       @Override
       public int compare(Person a, Person b) {
@@ -190,7 +190,7 @@ public class SchoolManager implements java.io.Serializable {
     return ret;
   }
 
-  /** 
+  /**
    * @return Person String with the new phone number
    */
   public String changePhoneNumber(int phoneNumber) {
@@ -198,12 +198,12 @@ public class SchoolManager implements java.io.Serializable {
     return _user.toString();
   }
 
-  /** 
+  /**
    * @param name
    * @return String with all users that have the name
    */
   public String searchPerson(String name) {
-    ArrayList<Person> users = _school.searchPerson(name);
+    List<Person> users = _school.searchPerson(name);
     Collections.sort(users, new Comparator<Person>() {
       @Override
       public int compare(Person a, Person b) {
@@ -217,7 +217,7 @@ public class SchoolManager implements java.io.Serializable {
     return ret;
   }
 
-  /** 
+  /**
    * @param disciplineName
    * @param projectName
    * @return true if the project was created
@@ -226,50 +226,36 @@ public class SchoolManager implements java.io.Serializable {
   public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
     Discipline discipline = null;
     Teacher teacher = (Teacher) _user;
+    Project project = null;
 
-    for (Discipline disc : teacher.getDisciplines()) {
-      if (disc.getName().equals(disciplineName)) {
-        discipline = disc;
-      }
-    }
+    discipline = teacher.getDisciplines().get(disciplineName);
 
     if (discipline == null)
       throw new NoSuchDisciplineIdException(disciplineName);
 
-    for (Project proj : discipline.getProjects()) {
-      if (proj.getName().equals(projectName))
-        return false;
-    }
+    if(discipline.getProjects().get(projectName) != null)
+      return false;
 
     discipline.addProject(new Project(projectName));
     return true;
   }
 
-  /** 
+  /**
    * @param disciplineName
    * @param projectName
    */
   public void closeProject(String disciplineName, String projectName)
       throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+    Teacher teacher = (Teacher) _user;
     Discipline discipline = null;
     Project project = null;
 
-    for (Course course : _school.getCourses()) {
-      for (Discipline disc : course.getDisciplines()) {
-        if (disc.getName().equals(disciplineName)) {
-          discipline = disc;
-        }
-      }
-    }
+    discipline = teacher.getDisciplines().get(disciplineName);
 
     if (discipline == null)
       throw new NoSuchDisciplineIdException(disciplineName);
 
-    for (Project proj : discipline.getProjects()) {
-      if (proj.getName().equals(projectName)) {
-        project = proj;
-      }
-    }
+    project = discipline.getProjects().get(projectName);
 
     if (project == null)
       throw new NoSuchProjectIdException(projectName);
@@ -277,9 +263,9 @@ public class SchoolManager implements java.io.Serializable {
     project.close();
   }
 
-  /** 
+  /**
    * @param disciplineName
-   * @return string with all enrolled students 
+   * @return string with all enrolled students
    */
   public String showDisciplineStudents(String disciplineName) throws NoSuchDisciplineIdException {
     Teacher teacher = (Teacher) _user;

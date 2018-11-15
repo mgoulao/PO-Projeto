@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import sth.core.Course;
 import sth.core.Discipline;
@@ -16,7 +18,7 @@ public class Teacher extends Person implements java.io.Serializable {
 
 	private static final long serialVersionUID = 201811111807L;
 
-	private TreeMap<Course, TreeSet<Discipline>> _courseAndDisciplines = new TreeMap<Course, TreeSet<Discipline>>();
+	private TreeMap<Course, TreeMap<String, Discipline>> _courseAndDisciplines = new TreeMap<Course, TreeMap<String, Discipline>>();
 
 	/**
 	 * @param iD
@@ -46,7 +48,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param p
 	 * @return Map with submissions
 	 */
-	TreeMap<Student, Submission> seeResults(Project p) {
+	Map<Student, Submission> seeResults(Project p) {
 		return p.getSubmissions();
 	}
 
@@ -54,7 +56,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param d
 	 * @return List with all discipline students
 	 */
-	ArrayList<Student> seeStudents(Discipline d) {
+	List<Student> seeStudents(Discipline d) {
 		return d.getStudents();
 	}
 
@@ -63,7 +65,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param c
 	 */
 	void addDiscipline(Discipline d, Course c) {
-		_courseAndDisciplines.get(c).add(d);
+		_courseAndDisciplines.get(c).put(d.getName(), d);
 	}
 
 	/**
@@ -72,11 +74,10 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @return discipline with the unique name
 	 */
 	Discipline getDiscipline(String name) {
-		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
-			for (Discipline discipline : entry.getValue()) {
-				if (discipline.getName().equals(name))
-					return discipline;
-			}
+		for (Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
+			Discipline discipline = entry.getValue().get(name);
+			if (discipline != null)
+				return discipline;
 		}
 		return null;
 	}
@@ -84,12 +85,10 @@ public class Teacher extends Person implements java.io.Serializable {
 	/**
 	 * @return List with all discipline teached
 	 */
-	ArrayList<Discipline> getDisciplines() {
-		ArrayList<Discipline> disciplines = new ArrayList<>();
-		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
-			for (Discipline disc : entry.getValue()) {
-				disciplines.add(disc);
-			}
+	Map<String, Discipline> getDisciplines() {
+		Map<String, Discipline> disciplines = new HashMap<>();
+		for(Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
+			disciplines.putAll(entry.getValue());
 		}
 		return disciplines;
 	}
@@ -110,20 +109,20 @@ public class Teacher extends Person implements java.io.Serializable {
 		Discipline discipline = course.parseDiscipline(components[1]);
 
 		if (!_courseAndDisciplines.containsKey(course)) {
-			_courseAndDisciplines.put(course, new TreeSet<Discipline>());
+			_courseAndDisciplines.put(course, new TreeMap<String, Discipline>());
 		}
-		_courseAndDisciplines.get(course).add(discipline);
+		_courseAndDisciplines.get(course).put(discipline.getName(), discipline);
 		discipline.addTeacher(this);
 	}
 
 	@Override
 	public String toString() {
-		String ret = "DOCENTE|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
+		String ret = "DOCENTE|" + super.toString();
 
-		for (Map.Entry<Course, TreeSet<Discipline>> entry : _courseAndDisciplines.entrySet()) {
+		for (Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
 			String courseName = entry.getKey().getName();
-			for (Discipline disc : entry.getValue()) {
-				String discName = disc.getName();
+			for (Map.Entry<String, Discipline> discEntry : entry.getValue().entrySet()) {
+				String discName = discEntry.getKey();
 				ret += "* " + courseName + " - " + discName + "\n";
 			}
 		}

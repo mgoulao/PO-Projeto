@@ -14,7 +14,7 @@ import sth.core.SchoolManager;
 public class DoSave extends Command<SchoolManager> {
 
   private Input<String> _file;
-  private String _name;
+  private String _fileName;
 
   /**
    * @param receiver
@@ -26,15 +26,15 @@ public class DoSave extends Command<SchoolManager> {
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
-    _name = _receiver.getFile();
-    if (_name.isEmpty()) {
+    _fileName = _receiver.getFile();
+    if (_fileName.isEmpty()) {
       _file = _form.addStringInput(Message.newSaveAs());
       _form.parse();
-      _name = _file.value();
+      _fileName = _file.value();
     }
     
     try {
-      _receiver.doSave(_name);
+      _receiver.doSave(_fileName);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     } catch (IOException e) {
