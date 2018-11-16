@@ -32,7 +32,7 @@ public class School implements java.io.Serializable {
   private Map<Integer, Person> _users;
 
   School() {
-    _name = "UBI";
+    _name = "Lobachevsky";
     _courses = new HashMap<>();
     _users = new HashMap<>();
   }
