@@ -34,38 +34,13 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 	}
 
 	/**
-	 * @return List course disciplines
-	 */
-	List<Discipline> getDisciplines() {
-		List<Discipline> disciplines = new ArrayList<>();
-		for(Map.Entry<String, Discipline> entry : _disciplines.entrySet())
-			disciplines.add(entry.getValue());
-
-		return disciplines;
-	}
-
-	/**
 	 * @param disciplines
 	 */
 	void addDiscipline(Discipline discipline) {
 		_disciplines.put(discipline.getName(), discipline);
 	}
 
-	/**
-	 * @param name
-	 * @return Discipline with the name
-	 */
-	Discipline parseDiscipline(String name) {
-		Discipline d = null;
-		for (Discipline disc : getDisciplines()) {
-			if (disc.getName().equals(name))
-				return disc;
-		}
-		d = new Discipline(name);
-		addDiscipline(d);
-		return d;
-	}
-
+	
 	/**
 	 * @param s
 	 * @return true if the student can be a representative
@@ -77,7 +52,7 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * @param s
 	 */
@@ -86,14 +61,27 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 			_representatives.remove(s);
 		}
 	}
-
+	
 	/**
 	 * @param student
 	 */
 	void addStudent(Student student) {
 		_students.add(student);
 	}
-
+	
+	/**
+	 * @param name
+	 * @return Discipline with the name
+	 */
+	Discipline parseDiscipline(String name) {
+		Discipline d;
+		if(_disciplines.containsKey(name))
+			return _disciplines.get(name);
+		d = new Discipline(name);
+		addDiscipline(d);
+		return d;
+	}
+	
 	@Override
 	public int compareTo(Course other) {
 		return this._name.compareTo(other.getName());

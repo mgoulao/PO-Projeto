@@ -72,7 +72,7 @@ public class Discipline implements Comparable<Discipline>, java.io.Serializable 
 	}
 
 	/**
-	 * @return List with discipline projects
+	 * @return Map with discipline projects
 	 */
 	Map<String, Project> getProjects() {
 		return _projects;

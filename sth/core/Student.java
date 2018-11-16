@@ -97,6 +97,10 @@ public class Student extends Person implements java.io.Serializable {
 		_disciplines.add(d);
 	}
 
+	/**
+	 * @param lineContext
+	 * @param school
+	 */
 	@Override
 	void parseContext(String lineContext, School school) throws BadEntryException {
 		String components[] = lineContext.split("\\|");
@@ -117,6 +121,9 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @return string that represents Student
+	 */
 	@Override
 	public String toString() {
 		String ret = "";

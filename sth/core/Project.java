@@ -17,18 +17,10 @@ public class Project implements java.io.Serializable {
 
 	/**
 	 * @param name
-	 * @param description
-	 */
-	public Project(String name, String description) {
-		_name = name;
-		_description = description;
-	}
-
-	/**
-	 * @param name
 	 */
 	public Project(String name) {
 		_name = name;
+		_description = "Projeto - " + name;
 	}
 
 

@@ -27,9 +27,15 @@ public class School implements java.io.Serializable {
   /** Serial number for serialization. */
   private static final long serialVersionUID = 201810051538L;
 
-  private List<Course> _courses = new ArrayList<Course>();
-  private HashMap<Integer, Person> _users = new HashMap<>();
+  private String _name;
+  private Map<String, Course> _courses;
+  private Map<Integer, Person> _users;
 
+  School() {
+    _name = "UBI";
+    _courses = new HashMap<>();
+    _users = new HashMap<>();
+  }
 
   /**
    * @param filename
@@ -86,13 +92,13 @@ public class School implements java.io.Serializable {
    * @param course
    */
   void addCourse(Course course) {
-    _courses.add(course);
+    _courses.put(course.getName(), course);
   }
 
   /**
-   * @return List with all courses
+   * @return Map with all courses
    */
-  List<Course> getCourses() {
+  Map<String, Course> getCourses() {
     return _courses;
   }
 
@@ -101,14 +107,7 @@ public class School implements java.io.Serializable {
    * @return Course with the unique name
    */
   Course parseCourse(String name) {
-    Course course = null;
-
-    for (Course c : _courses) {
-      if (name.equals(c.getName())) {
-        course = c;
-        break;
-      }
-    }
+    Course course = _courses.get(name);
 
     if (course == null) {
       course = new Course(name);

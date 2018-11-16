@@ -83,7 +83,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	}
 
 	/**
-	 * @return List with all discipline teached
+	 * @return Map with all discipline teached
 	 */
 	Map<String, Discipline> getDisciplines() {
 		Map<String, Discipline> disciplines = new HashMap<>();
@@ -115,6 +115,9 @@ public class Teacher extends Person implements java.io.Serializable {
 		discipline.addTeacher(this);
 	}
 
+	/**
+	 * @return string that represents Teacher
+	 */
 	@Override
 	public String toString() {
 		String ret = "DOCENTE|" + super.toString();
