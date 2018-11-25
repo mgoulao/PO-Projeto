@@ -1,14 +1,18 @@
-#PROJETO PO
+# PROJETO PO
 
-##Compilar
+## Compilar
 
 ```javac -cp po-uilib.jar:. `find sth -name *.java` ```
 
-##Executar
+## Executar
 
 ```java -Dimport=people.import -cp po-uilib.jar:. sth.app.App```
 
-##Projeto
+## Jar
+
+```jar -cfv proj.jar `find sth -name *.java` ```
+
+## Projeto
 
 ### 4.2 Menu Principal
 
@@ -46,7 +50,7 @@
 * 4.6.6 Mostrar inqueritos de uma disciplina
 
 
-##Design Patterns
+## Design Patterns
 
 * 1 - 
 * 2 - 
