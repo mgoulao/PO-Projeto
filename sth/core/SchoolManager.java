@@ -228,7 +228,6 @@ public class SchoolManager implements java.io.Serializable {
   public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
     Discipline discipline = null;
     Teacher teacher = (Teacher) _user;
-    Project project = null;
 
     discipline = teacher.getDisciplines().get(disciplineName);
 
