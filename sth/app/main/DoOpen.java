@@ -19,7 +19,6 @@ import sth.core.exception.NoSuchPersonIdException;
 public class DoOpen extends Command<SchoolManager> {
 
   private Input<String> _file;
-  private Input<Integer> _login;
 
   /**
    * @param receiver

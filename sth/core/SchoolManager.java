@@ -76,6 +76,8 @@ public class SchoolManager implements java.io.Serializable {
     ObjectInputStream load = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
     _school = (School) load.readObject();
     load.close();
+    int id = _user.getID();
+    _user = _school.getPerson(id);
     _ficheiroAssociado = filename;
   }
 
@@ -233,7 +235,7 @@ public class SchoolManager implements java.io.Serializable {
     if (discipline == null)
       throw new NoSuchDisciplineIdException(disciplineName);
 
-    if(discipline.getProjects().get(projectName) != null)
+    if (discipline.getProjects().get(projectName) != null)
       return false;
 
     discipline.addProject(new Project(projectName));
@@ -275,7 +277,18 @@ public class SchoolManager implements java.io.Serializable {
       throw new NoSuchDisciplineIdException(disciplineName);
     }
 
-    for (Student student : discipline.getStudents()) {
+    List<Student> students = discipline.getStudents();
+    Collections.sort(students, new Comparator<Person>() {
+      @Override
+      public int compare(Person a, Person b) {
+        if (a.getID() < b.getID())
+          return -1;
+        else if (a.getID() == b.getID())
+          return 0;
+        return 1;
+      }
+    });
+    for (Student student : students){
       res += student.toString();
     }
     return res;
