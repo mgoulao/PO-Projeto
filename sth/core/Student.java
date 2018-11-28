@@ -1,11 +1,14 @@
 package sth.core;
 
 import sth.core.exception.BadEntryException;
+import sth.core.exception.NoSuchDisciplineIdException;
+import sth.core.exception.NoSuchProjectIdException;
 import sth.core.Discipline;
 import sth.core.Submission;
 import sth.core.Answer;
 
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.ArrayList;
 
@@ -20,7 +23,7 @@ public class Student extends Person implements java.io.Serializable {
 	private static final long serialVersionUID = 201811111805L;
 
 	private Course _course;
-	private TreeSet<Discipline> _disciplines = new TreeSet<>();
+	private Set<Discipline> _disciplines = new TreeSet<>();
 	private boolean _representative;
 
 	/**
@@ -52,15 +55,37 @@ public class Student extends Person implements java.io.Serializable {
 	 * @param representative
 	 */
 	void setRepresentative(boolean representative) {
-		if(_course.addRepresentative(this))
+		if (_course.addRepresentative(this))
 			_representative = representative;
 	}
 
 	/**
+	 * @param disciplineName
+	 * @param projectName
 	 * @param answer
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
 	 */
-	void submiteProject(String answer) {
-		// FIXME: implement
+	void submiteProject(String disciplineName, String projectName, String answer)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+		Discipline discipline = null;
+		Project project = null;
+
+		for (Discipline disc : getDisciplines()) {
+			if (disc.getName().equals(disciplineName)) {
+				discipline = disc;
+			}
+		}
+		if(discipline == null)
+			throw new NoSuchDisciplineIdException(disciplineName);
+
+		if((project = discipline.getProjects().get(projectName)) == null) {
+			throw new NoSuchProjectIdException(projectName);
+		}
+
+		if (!project.isClosed()) {
+			project.addSubmission(answer, this);
+		}
 	}
 
 	/**
@@ -95,6 +120,10 @@ public class Student extends Person implements java.io.Serializable {
 	 */
 	void addDiscipline(Discipline d) {
 		_disciplines.add(d);
+	}
+
+	Set<Discipline> getDisciplines() {
+		return _disciplines;
 	}
 
 	/**

@@ -10,7 +10,7 @@ import sth.core.SchoolManager;
  */
 public class DoSearchPerson extends Command<SchoolManager> {
 
-  Input<String> _name;
+  private Input<String> _name;
   
   /**
    * @param receiver

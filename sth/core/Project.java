@@ -1,5 +1,7 @@
 package sth.core;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -13,7 +15,7 @@ public class Project implements java.io.Serializable {
 	private String _name;
 	private String _description;
 	private boolean _closed;
-	private TreeMap<Student, Submission> _submissions = new TreeMap<Student, Submission>();
+	private List<Submission> _submissions;
 
 	/**
 	 * @param name
@@ -21,10 +23,10 @@ public class Project implements java.io.Serializable {
 	public Project(String name) {
 		_name = name;
 		_description = "Projeto - " + name;
+		_submissions = new ArrayList<>();
 	}
 
-
-	/** 
+	/**
 	 * @return name
 	 */
 	public String getName() {
@@ -38,18 +40,28 @@ public class Project implements java.io.Serializable {
 		_closed = true;
 	}
 
+	boolean isClosed() {
+		return _closed;
+	}
+
 	/**
-	 * @param s
-	 * @param a
+	 * @param answer
+	 * @param student
 	 */
-	void addSubmission(Submission s, Student a) {
-		_submissions.replace(a, s);
+	void addSubmission(String answer, Student student) {
+		for (Submission subm : _submissions) {
+			if (subm.getStudentID() == student.getID()) {
+				_submissions.remove(subm);
+				break;
+			}
+		}
+		_submissions.add(new Submission(student, answer));
 	}
 
 	/**
 	 * @return All submissions
 	 */
-	TreeMap<Student, Submission> getSubmissions() {
+	List<Submission> getSubmissions() {
 		return _submissions;
 	}
 }

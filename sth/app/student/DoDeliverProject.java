@@ -12,20 +12,22 @@ import sth.core.exception.NoSuchDisciplineIdException;
  */
 public class DoDeliverProject extends sth.app.common.ProjectCommand {
 
-  //FIXME add input fields if needed
+    Input<String> _answer;
 
   /**
    * @param receiver
    */
   public DoDeliverProject(SchoolManager receiver) {
     super(Label.DELIVER_PROJECT, receiver);
-    //FIXME initialize input fields if needed
+    _answer = _form.addStringInput(Message.requestDeliveryMessage());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
-    //FIXME implement command
+    String discName = _discipline.value();
+    String projectName = _project.value();
+    _receiver.submitProject(discName, projectName, _answer.value());
   }
 
 }

@@ -287,8 +287,45 @@ public class SchoolManager implements java.io.Serializable {
         return 1;
       }
     });
-    for (Student student : students){
+    for (Student student : students) {
       res += student.toString();
+    }
+    return res;
+  }
+
+  /**
+   * @param disciplineName
+   * @param projectName
+   * @param text
+   * @throws NoSuchDisciplineIdException
+   * @throws NoSuchProjectIdException
+   */
+  public void submitProject(String disciplineName, String projectName, String answer)
+      throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+    Student student = (Student) _user;
+    student.submiteProject(disciplineName, projectName, answer);
+  }
+
+  public String showProjectSubmissions(String disciplineName, String projectName)
+      throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+    Teacher teacher = (Teacher) _user;
+    Discipline discipline = null;
+    Project project = null;
+    String res = "";
+
+    if((discipline = teacher.getDiscipline(disciplineName)) == null) {
+      throw new NoSuchDisciplineIdException(disciplineName);
+    }
+
+    res = disciplineName + " " + projectName + "\n";
+
+    if((project = discipline.getProjects().get(projectName)) == null) {
+      throw new NoSuchProjectIdException(projectName);
+    }
+
+    List<Submission> submissions = project.getSubmissions();
+    for (Submission submission : submissions) {
+      res += ("* " + submission.getStudentID() + " - " + submission.toString() + "\n");
     }
     return res;
   }

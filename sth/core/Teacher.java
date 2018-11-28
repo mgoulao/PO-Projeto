@@ -48,7 +48,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param p
 	 * @return Map with submissions
 	 */
-	Map<Student, Submission> seeResults(Project p) {
+	List<Submission> seeResults(Project p) {
 		return p.getSubmissions();
 	}
 

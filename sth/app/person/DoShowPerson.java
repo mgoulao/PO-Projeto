@@ -13,7 +13,7 @@ import sth.core.exception.NoSuchPersonIdException;
  */
 public class DoShowPerson extends Command<SchoolManager> {
 
-  Input<Integer> _id;
+  private Input<Integer> _id;
 
   /**
    * @param receiver
