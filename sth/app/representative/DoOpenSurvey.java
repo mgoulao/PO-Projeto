@@ -17,13 +17,12 @@ public class DoOpenSurvey extends sth.app.common.ProjectCommand {
    */
   public DoOpenSurvey(SchoolManager receiver) {
     super(Label.OPEN_SURVEY, receiver);
-    //FIXME initialize input fields if needed
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */ 
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+    _receiver.openSurvey(_discipline.value(), _project.value());
   }
 
 }

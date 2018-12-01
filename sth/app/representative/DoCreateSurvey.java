@@ -17,13 +17,12 @@ public class DoCreateSurvey extends sth.app.common.ProjectCommand {
    */
   public DoCreateSurvey(SchoolManager receiver) {
     super(Label.CREATE_SURVEY, receiver);
-    //FIXME initialize input fields if needed
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */ 
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+    
   }
 
 }

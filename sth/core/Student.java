@@ -10,6 +10,7 @@ import sth.core.Answer;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 import java.util.ArrayList;
 
 import sth.core.Discipline;
@@ -124,6 +125,17 @@ public class Student extends Person implements java.io.Serializable {
 
 	Set<Discipline> getDisciplines() {
 		return _disciplines;
+	}
+
+	Discipline getDiscipline(String disciplineName) {
+		Discipline discipline = null;
+		for(Discipline disc : _disciplines) {
+			if(disc.getName().equals(disciplineName)) {
+				discipline = disc;
+				break;
+			}
+		}
+		return discipline;
 	}
 
 	/**

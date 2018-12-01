@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import sth.app.exception.DuplicateSurveyException;
+import sth.app.exception.ProjectException;
 import sth.core.Student;
 import sth.core.Submission;
 
@@ -16,6 +18,7 @@ public class Project implements java.io.Serializable {
 	private String _description;
 	private boolean _closed;
 	private List<Submission> _submissions;
+	private Survey _survey;
 
 	/**
 	 * @param name
@@ -36,8 +39,15 @@ public class Project implements java.io.Serializable {
 	/**
 	 * Closes project
 	 */
-	void close() {
+	void close(String disciplineName) {
 		_closed = true;
+		if (_survey != null) {
+			try {
+				_survey.open(disciplineName, this);
+			} catch (ProjectException e) {
+				//Esta excessao nunca ocorre
+			}
+		}
 	}
 
 	boolean isClosed() {
@@ -63,5 +73,22 @@ public class Project implements java.io.Serializable {
 	 */
 	List<Submission> getSubmissions() {
 		return _submissions;
+	}
+
+	Survey getSurvey() {
+		return _survey;
+	}
+
+	void removeSurvey() {
+		_survey = null;
+	}
+
+	void addSurvey(String disciplineName) throws ProjectException {
+		if (_survey != null) {
+			throw new DuplicateSurveyException(disciplineName, _name);
+		}
+		_survey = new Survey();
+		if (isClosed())
+			_survey.open(disciplineName, this);
 	}
 }

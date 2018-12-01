@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import sth.app.exception.ProjectException;
+
 import sth.core.Answer;
 
 public class Survey implements java.io.Serializable {
 
 	private static final long serialVersionUID = 201811111809L;
 
-	private enum SurveySate {
-		ABERTO, FECHADO
-	};
+	public final SurveyState CREATED = new SurveyCreated(this);
+	public final SurveyState OPEN = new SurveyOpen(this);
+	public final SurveyState CLOSED = new SurveyClosed(this);
+	public final SurveyState FINALIZED = new SurveyFinalized(this);
 
-	private SurveySate _state;
+	private SurveyState _state;
 	private ArrayList<Student> _filledIn = new ArrayList<>();
 	private ArrayList<Answer> _answers = new ArrayList<>();
 
@@ -22,28 +25,36 @@ public class Survey implements java.io.Serializable {
 	 * Survey constructer
 	 */
 	Survey() {
-		_state = SurveySate.ABERTO;
+		_state = new SurveyCreated(this);
+	}
+
+	protected void setState(SurveyState state) {
+		_state = state;
+	}
+
+	void cancel(String disciplineName, Project project) throws ProjectException {
+		_state.cancel(disciplineName, project);
 	}
 
 	/**
 	 * open survey
 	 */
-	void open() {
-		// FIXME: implement
+	void open(String disciplineName, Project project) throws ProjectException  {
+		_state.open(disciplineName, project);
 	}
 
 	/**
 	 * close survey
 	 */
-	void close() {
-		// FIXME: implement
+	void close(String disciplineName, Project project) throws ProjectException {
+		_state.close(disciplineName, project);
 	}
 
 	/**
 	 * finalize survey
 	 */
-	void finalizeSurvey() {
-		// FIXME: implement
+	void finalizeSurvey(String disciplineName, Project project) throws ProjectException {
+		_state.finalizeSurvey(disciplineName, project);
 	}
 
 	/**
@@ -52,7 +63,13 @@ public class Survey implements java.io.Serializable {
 	 * @param comment
 	 */
 	void addAnswer(Student student, int time, String comment) {
-		// FIXME: implement
+		if(_filledIn.contains(student)) {
+			//TODO: erro
+		}
+	}
+
+	int getNumberAnswers() {
+		return _answers.size();
 	}
 
 	/**
@@ -60,7 +77,7 @@ public class Survey implements java.io.Serializable {
 	 * @return survey results
 	 */
 	String getResultsFor(Person person) {
-		// FIXME: implement
+		_state.getResults();
 		return "";
 	}
 

@@ -27,8 +27,8 @@ import java.util.Comparator;
 
 import sth.core.Teacher;
 import sth.core.Student;
+import sth.app.exception.ProjectException;
 import sth.core.Employee;
-import sth.core.exception.NoSuchPersonIdException;
 
 /**
  * The façade class.
@@ -261,7 +261,7 @@ public class SchoolManager implements java.io.Serializable {
     if (project == null)
       throw new NoSuchProjectIdException(projectName);
 
-    project.close();
+    project.close(disciplineName);
   }
 
   /**
@@ -313,13 +313,13 @@ public class SchoolManager implements java.io.Serializable {
     Project project = null;
     String res = "";
 
-    if((discipline = teacher.getDiscipline(disciplineName)) == null) {
+    if ((discipline = teacher.getDiscipline(disciplineName)) == null) {
       throw new NoSuchDisciplineIdException(disciplineName);
     }
 
     res = disciplineName + " " + projectName + "\n";
 
-    if((project = discipline.getProjects().get(projectName)) == null) {
+    if ((project = discipline.getProjects().get(projectName)) == null) {
       throw new NoSuchProjectIdException(projectName);
     }
 
@@ -329,4 +329,42 @@ public class SchoolManager implements java.io.Serializable {
     }
     return res;
   }
+
+  private Project getProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+    Student student = (Student) _user;
+    Discipline discipline = student.getDiscipline(disciplineName);
+    if (discipline == null) {
+      throw new NoSuchDisciplineIdException(disciplineName);
+    }
+
+    Project project = discipline.getProjects().get(projectName);
+    if (project == null) {
+      throw new NoSuchProjectIdException(projectName);
+    }
+    return project;
+  }
+
+  public void cancelSurvey(String disciplineName, String projectName)
+      throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+
+    Project project = getProject(disciplineName, projectName);
+    Survey survey = project.getSurvey();
+    survey.cancel(disciplineName, project);
+  }
+
+  public void openSurvey(String disciplineName, String projectName)
+      throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+    Project project = getProject(disciplineName, projectName);
+    Survey survey = project.getSurvey();
+    survey.open(disciplineName, project);
+  }
+
+  public void finalizeSurvey(String disciplineName, String projectName)
+      throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+
+    Project project = getProject(disciplineName, projectName);
+    Survey survey = project.getSurvey();
+    survey.finalizeSurvey(disciplineName, project);
+  }
+
 }
