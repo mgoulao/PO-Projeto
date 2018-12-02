@@ -89,7 +89,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 */
 	Map<String, Discipline> getDisciplines() {
 		Map<String, Discipline> disciplines = new HashMap<>();
-		for(Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
+		for (Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
 			disciplines.putAll(entry.getValue());
 		}
 		return disciplines;
@@ -117,21 +117,22 @@ public class Teacher extends Person implements java.io.Serializable {
 		discipline.addTeacher(this);
 	}
 
-	/**
-	 * @return string that represents Teacher
-	 */
 	@Override
-	public String toString() {
-		String ret = "DOCENTE|" + super.toString();
+	protected String getPersonType() {
+		return "DOCENTE";
+	}
 
+	@Override
+	protected String getPersonDisciplines() {
+		String res = "";
 		for (Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
 			String courseName = entry.getKey().getName();
 			for (Map.Entry<String, Discipline> discEntry : entry.getValue().entrySet()) {
 				String discName = discEntry.getKey();
-				ret += "* " + courseName + " - " + discName + "\n";
+				res += "* " + courseName + " - " + discName + "\n";
 			}
 		}
-
-		return ret;
+		return res;
 	}
+
 }

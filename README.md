@@ -52,6 +52,6 @@
 
 ## Design Patterns
 
-* 1 - 
+* 1 - Template &#9745;
 * 2 - State &#9745;
 * 3 - Observer

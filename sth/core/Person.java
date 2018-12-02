@@ -67,9 +67,19 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 
 	abstract Discipline getDiscipline(String disciplineName);
 
+	protected abstract String getPersonType();
+	protected String getPersonBasicInfo() {
+		return "|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
+	}
+	protected abstract String getPersonDisciplines();
+
 	@Override
 	public String toString() {
-		return getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
+		String res = "";
+		res += getPersonType();
+		res += getPersonBasicInfo();
+		res += getPersonDisciplines();
+		return res;
 	}
 
 	/**

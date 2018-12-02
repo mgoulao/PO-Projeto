@@ -18,12 +18,14 @@ public class Employee extends Person implements java.io.Serializable {
 		return null;
 	}
 
-	/**
-	 * @return string that represents Employee
-	 */
 	@Override
-	public String toString() {
-		return ("FUNCIONÁRIO|" + super.toString());
+	protected String getPersonType() {
+		return "FUNCIONÁRIO";
+	}
+
+	@Override
+	protected String getPersonDisciplines() {
+		return "";
 	}
 
 }

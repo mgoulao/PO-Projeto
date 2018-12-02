@@ -159,24 +159,26 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
-	/**
-	 * @return string that represents Student
-	 */
 	@Override
-	public String toString() {
-		String ret = "";
+	protected String getPersonType() {
+		String res = "";
+		if (isRepresentative())
+			res += "DELEGADO";
+		else
+			res += "ALUNO";
+		return res;
+	}
+
+	@Override
+	protected String getPersonDisciplines() {
+		String res = "";
 		String courseName = _course.getName();
-		if (_representative) {
-			ret = "DELEGADO|" + super.toString();
-		} else {
-			ret = "ALUNO|" + super.toString();
-		}
 		for (Map.Entry<String, Discipline> entry : getDisciplines().entrySet()) {
 			Discipline disc = entry.getValue();
 			String discName = disc.getName();
-			ret += "* " + courseName + " - " + discName + "\n";
+			res += "* " + courseName + " - " + discName + "\n";
 		}
-
-		return ret;
+		return res;
 	}
+
 }
