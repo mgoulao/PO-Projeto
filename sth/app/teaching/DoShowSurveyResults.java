@@ -17,13 +17,13 @@ public class DoShowSurveyResults extends sth.app.common.ProjectCommand {
    */
   public DoShowSurveyResults(SchoolManager receiver) {
     super(Label.SHOW_SURVEY_RESULTS, receiver);
-    //FIXME initialize input fields if needed
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException {
-    //FIXME implement command
+    _display.addLine(_receiver.showSurveyResults(_discipline.value(), _project.value()));
+    _display.display();
   }
 
 }

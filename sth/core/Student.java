@@ -8,7 +8,9 @@ import sth.core.Submission;
 import sth.core.Answer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class Student extends Person implements java.io.Serializable {
 	private static final long serialVersionUID = 201811111805L;
 
 	private Course _course;
-	private Set<Discipline> _disciplines = new TreeSet<>();
+	private Map<String, Discipline> _disciplines = new TreeMap<>();
 	private boolean _representative;
 
 	/**
@@ -67,26 +69,27 @@ public class Student extends Person implements java.io.Serializable {
 	 * @throws NoSuchDisciplineIdException
 	 * @throws NoSuchProjectIdException
 	 */
-	void submiteProject(String disciplineName, String projectName, String answer)
+	void submitProject(String disciplineName, String projectName, String answer)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 		Discipline discipline = null;
 		Project project = null;
 
-		for (Discipline disc : getDisciplines()) {
+		for (Map.Entry<String, Discipline> entry : getDisciplines().entrySet()) {
+			Discipline disc = entry.getValue();
 			if (disc.getName().equals(disciplineName)) {
 				discipline = disc;
 			}
 		}
-		if(discipline == null)
+		if (discipline == null)
 			throw new NoSuchDisciplineIdException(disciplineName);
 
-		if((project = discipline.getProjects().get(projectName)) == null) {
+		if ((project = discipline.getProjects().get(projectName)) == null)
 			throw new NoSuchProjectIdException(projectName);
-		}
 
-		if (!project.isClosed()) {
+		if (!project.isClosed())
 			project.addSubmission(answer, this);
-		}
+		else
+			throw new NoSuchProjectIdException(projectName);
 	}
 
 	/**
@@ -120,22 +123,16 @@ public class Student extends Person implements java.io.Serializable {
 	 * @param d
 	 */
 	void addDiscipline(Discipline d) {
-		_disciplines.add(d);
+		_disciplines.put(d.getName(), d);
 	}
 
-	Set<Discipline> getDisciplines() {
+	Map<String, Discipline> getDisciplines() {
 		return _disciplines;
 	}
 
+	@Override
 	Discipline getDiscipline(String disciplineName) {
-		Discipline discipline = null;
-		for(Discipline disc : _disciplines) {
-			if(disc.getName().equals(disciplineName)) {
-				discipline = disc;
-				break;
-			}
-		}
-		return discipline;
+		return getDisciplines().get(disciplineName);
 	}
 
 	/**
@@ -155,7 +152,7 @@ public class Student extends Person implements java.io.Serializable {
 		}
 
 		Discipline disc = _course.parseDiscipline(components[1]);
-		_disciplines.add(disc);
+		_disciplines.put(disc.getName(), disc);
 		disc.enrollStudent(this);
 		if (_representative) {
 			_course.addRepresentative(this);
@@ -174,7 +171,8 @@ public class Student extends Person implements java.io.Serializable {
 		} else {
 			ret = "ALUNO|" + super.toString();
 		}
-		for (Discipline disc : _disciplines) {
+		for (Map.Entry<String, Discipline> entry : getDisciplines().entrySet()) {
+			Discipline disc = entry.getValue();
 			String discName = disc.getName();
 			ret += "* " + courseName + " - " + discName + "\n";
 		}

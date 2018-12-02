@@ -36,22 +36,22 @@
 
 ### 4.5 Portal do Estudante
 
-* 4.5.1 Entregar projecto
-* 4.5.2 Preencher inquerito
-* 4.5.3 Ver resultados de inquerito
+* 4.5.1 Entregar projecto &#9745;
+* 4.5.2 Preencher inquerito &#9745;
+* 4.5.3 Ver resultados de inquerito &#9745;
 
 ### 4.6 Portal do Delegado
 
-* 4.6.1 Criar inquerito
-* 4.6.2 Cancelar inquerito
-* 4.6.3 Abrir inquerito
-* 4.6.4 Fechar inquerito
-* 4.6.5 Finalizar inquerito
-* 4.6.6 Mostrar inqueritos de uma disciplina
+* 4.6.1 Criar inquerito &#9745;
+* 4.6.2 Cancelar inquerito &#9745;
+* 4.6.3 Abrir inquerito &#9745;
+* 4.6.4 Fechar inquerito &#9745;
+* 4.6.5 Finalizar inquerito &#9745;
+* 4.6.6 Mostrar inqueritos de uma disciplina &#9745;
 
 
 ## Design Patterns
 
 * 1 - 
-* 2 - 
+* 2 - State &#9745;
 * 3 - Observer

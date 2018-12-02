@@ -13,6 +13,11 @@ public class Employee extends Person implements java.io.Serializable {
 		super(iD, phoneNumber, name);
 	}
 
+	@Override
+	Discipline getDiscipline(String disciplineName) {
+		return null;
+	}
+
 	/**
 	 * @return string that represents Employee
 	 */

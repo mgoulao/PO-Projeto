@@ -2,8 +2,12 @@ package sth.core;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Set;
+import java.util.TreeSet;
 
 import sth.app.exception.DuplicateSurveyException;
 import sth.app.exception.ProjectException;
@@ -17,7 +21,7 @@ public class Project implements java.io.Serializable {
 	private String _name;
 	private String _description;
 	private boolean _closed;
-	private List<Submission> _submissions;
+	private Collection<Submission> _submissions;
 	private Survey _survey;
 
 	/**
@@ -26,7 +30,7 @@ public class Project implements java.io.Serializable {
 	public Project(String name) {
 		_name = name;
 		_description = "Projeto - " + name;
-		_submissions = new ArrayList<>();
+		_submissions = new TreeSet<>();
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class Project implements java.io.Serializable {
 			try {
 				_survey.open(disciplineName, this);
 			} catch (ProjectException e) {
-				//Esta excessao nunca ocorre
+				//TODO: Verificar isto -> Esta excessao nunca ocorre
 			}
 		}
 	}
@@ -59,9 +63,11 @@ public class Project implements java.io.Serializable {
 	 * @param student
 	 */
 	void addSubmission(String answer, Student student) {
-		for (Submission subm : _submissions) {
+		Iterator<Submission> iterator = _submissions.iterator();
+		while (iterator.hasNext()) {
+			Submission subm = iterator.next();
 			if (subm.getStudentID() == student.getID()) {
-				_submissions.remove(subm);
+				iterator.remove();
 				break;
 			}
 		}
@@ -71,8 +77,12 @@ public class Project implements java.io.Serializable {
 	/**
 	 * @return All submissions
 	 */
-	List<Submission> getSubmissions() {
+	Collection<Submission> getSubmissions() {
 		return _submissions;
+	}
+
+	int getNumberSubmissions() {
+		return _submissions.size();
 	}
 
 	Survey getSurvey() {
@@ -90,5 +100,14 @@ public class Project implements java.io.Serializable {
 		_survey = new Survey();
 		if (isClosed())
 			_survey.open(disciplineName, this);
+	}
+
+	boolean studentSubmitedProject(Student student) {
+		for (Submission subm : _submissions) {
+			if (subm.getStudentID() == student.getID()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

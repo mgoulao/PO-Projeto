@@ -1,5 +1,7 @@
 package sth.core;
 
+import java.util.Map;
+
 import sth.core.exception.BadEntryException;
 
 public abstract class Person implements Comparable<Person>, java.io.Serializable {
@@ -62,6 +64,8 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	public void setName(String name) {
 		_name = name;
 	}
+
+	abstract Discipline getDiscipline(String disciplineName);
 
 	@Override
 	public String toString() {

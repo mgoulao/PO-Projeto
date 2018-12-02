@@ -1,5 +1,8 @@
 package sth.core;
 
+import sth.app.exception.NoSurveyException;
+import sth.app.exception.ProjectException;
+
 public class SurveyClosed extends SurveyState implements java.io.Serializable {
 
 	private static final long serialVersionUID = 201812012142L;
@@ -24,10 +27,11 @@ public class SurveyClosed extends SurveyState implements java.io.Serializable {
 		_survey.setState(new SurveyFinalized(_survey));
 	}
 
-	void submit() {
-
+	void submit(String disciplineName, Project project, Student student, int time, String comment) throws ProjectException {
+		throw new NoSurveyException(disciplineName, project.getName());
 	}
 
-	void getResults() {
+	String getResults(Person person, String disciplineName, Project project, boolean smallFormat) {
+		return super.getResults(person, disciplineName, project, smallFormat) + " fechado\n";
 	}
 }

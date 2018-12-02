@@ -16,13 +16,12 @@ public class DoCloseSurvey extends sth.app.common.ProjectCommand {
    */
   public DoCloseSurvey(SchoolManager receiver) {
     super(Label.CLOSE_SURVEY, receiver);
-    //FIXME initialize input fields if needed
   }
 
   /** @see sth.app.common.ProjectCommand#myExecute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, DialogException {
-    //FIXME implement command
+    _receiver.closeSurvey(_discipline.value(), _project.value());
   }
 
 }

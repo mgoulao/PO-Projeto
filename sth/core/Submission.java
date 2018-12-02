@@ -1,6 +1,8 @@
 package sth.core;
 
-public class Submission {
+public class Submission implements Comparable<Submission>, java.io.Serializable {
+
+	private static final long serialVersionUID = 201812021600L;
 
 	private Student _student;
 	private String _answer;
@@ -23,6 +25,11 @@ public class Submission {
 
 	@Override
 	public String toString() {
-		return "Submission placeholder";
+		return _answer;
+	}
+
+	@Override
+	public int compareTo(Submission subm) {
+		return getStudentID() - subm.getStudentID();
 	}
 }

@@ -5,7 +5,7 @@ package sth.app.student;
 public interface Label {
 
   /** 4.4 Menu title. */
-  String TITLE = "Menu de gestão de itinerários";
+  String TITLE = "Menu do Estudante";
 
   /** 4.4.1 Deliver project. */
   String DELIVER_PROJECT = "Entregar projecto";

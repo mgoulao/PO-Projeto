@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param p
 	 * @return Map with submissions
 	 */
-	List<Submission> seeResults(Project p) {
+	Collection<Submission> seeResults(Project p) {
 		return p.getSubmissions();
 	}
 
@@ -73,6 +74,7 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param name
 	 * @return discipline with the unique name
 	 */
+	@Override
 	Discipline getDiscipline(String name) {
 		for (Map.Entry<Course, TreeMap<String, Discipline>> entry : _courseAndDisciplines.entrySet()) {
 			Discipline discipline = entry.getValue().get(name);
