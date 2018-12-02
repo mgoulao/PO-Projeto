@@ -68,7 +68,15 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 	void addStudent(Student student) {
 		_students.add(student);
 	}
+
+	Discipline getDiscipline(String disciplineName) {
+		return _disciplines.get(disciplineName);
+	}
 	
+	Map<String, Discipline> getDisciplines() {
+		return _disciplines;
+	}
+
 	/**
 	 * @param name
 	 * @return Discipline with the name

@@ -40,6 +40,6 @@ public class SurveyCreated extends SurveyState implements java.io.Serializable {
 	}
 
 	String getResults(Person person, String disciplineName, Project project, boolean smallFormat) {
-		return super.getResults(person, disciplineName, project, smallFormat) + " por abrir\n";
+		return super.getResults(person, disciplineName, project, smallFormat) + " (por abrir)\n";
 	}
 }

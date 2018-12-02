@@ -5,7 +5,7 @@ package sth.app.representative;
 public interface Label {
 
   /** 3.4 Menu title. */
-  String TITLE = "Menu de gestão de inquéritos";
+  String TITLE = "Portal do Delegado";
 
   /** 4.5.1. Create survey. */
   String CREATE_SURVEY = "Criar inquérito";

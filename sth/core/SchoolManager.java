@@ -332,6 +332,22 @@ public class SchoolManager implements java.io.Serializable {
 		return res;
 	}
 
+	private Project getCourseProject(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+		Student representative = (Student) _user;
+		Course course = representative.getCourse();
+		Discipline discipline = course.getDiscipline(disciplineName);
+		if (discipline == null) {
+			throw new NoSuchDisciplineIdException(disciplineName);
+		}
+
+		Project project = discipline.getProjects().get(projectName);
+		if (project == null) {
+			throw new NoSuchProjectIdException(projectName);
+		}
+		return project;
+	}
+
 	private Project getProject(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 		Discipline discipline = _user.getDiscipline(disciplineName);
@@ -348,14 +364,14 @@ public class SchoolManager implements java.io.Serializable {
 
 	public void createSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
-		Project project = getProject(disciplineName, projectName);
+		Project project = getCourseProject(disciplineName, projectName);
 		project.addSurvey(disciplineName);
 	}
 
 	public void cancelSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
 
-		Project project = getProject(disciplineName, projectName);
+		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		if (survey == null)
 			throw new NoSurveyException(disciplineName, projectName);
@@ -364,7 +380,7 @@ public class SchoolManager implements java.io.Serializable {
 
 	public void openSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
-		Project project = getProject(disciplineName, projectName);
+		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		if (survey == null)
 			throw new NoSurveyException(disciplineName, projectName);
@@ -373,7 +389,7 @@ public class SchoolManager implements java.io.Serializable {
 
 	public void closeSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
-		Project project = getProject(disciplineName, projectName);
+		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		if (survey == null)
 			throw new NoSurveyException(disciplineName, projectName);
@@ -383,7 +399,7 @@ public class SchoolManager implements java.io.Serializable {
 	public void finalizeSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
 
-		Project project = getProject(disciplineName, projectName);
+		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		if (survey == null)
 			throw new NoSurveyException(disciplineName, projectName);
@@ -416,7 +432,9 @@ public class SchoolManager implements java.io.Serializable {
 
 	public String showDisciplineSurveyResults(String disciplineName) throws NoSuchDisciplineIdException {
 		String res = "";
-		Discipline discipline = _user.getDiscipline(disciplineName);
+		Student representative = (Student) _user;
+		Course course = representative.getCourse();
+		Discipline discipline = course.getDiscipline(disciplineName);
 		if (discipline == null)
 			throw new NoSuchDisciplineIdException(disciplineName);
 		for (Map.Entry<String, Project> entry : discipline.getProjects().entrySet()) {

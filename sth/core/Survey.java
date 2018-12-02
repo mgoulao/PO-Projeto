@@ -13,11 +13,6 @@ public class Survey implements java.io.Serializable {
 
 	private static final long serialVersionUID = 201811111809L;
 
-	public final SurveyState CREATED = new SurveyCreated(this);
-	public final SurveyState OPEN = new SurveyOpen(this);
-	public final SurveyState CLOSED = new SurveyClosed(this);
-	public final SurveyState FINALIZED = new SurveyFinalized(this);
-
 	private SurveyState _state;
 	private ArrayList<Student> _filledIn = new ArrayList<>();
 	private ArrayList<Answer> _answers = new ArrayList<>();

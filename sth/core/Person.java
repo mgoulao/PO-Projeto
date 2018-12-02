@@ -11,6 +11,8 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	private String _name;
 	private int _id;
 	private int _phoneNumber;
+	/* private ArrayList<Notification> _notifications = new ArrayList<Notification>();
+	private boolean _hasNotificationsOn; */
 
 	/**
 	 * @param id
@@ -65,12 +67,37 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		_name = name;
 	}
 
+	/* public void changeNotificationsSettings() {
+		if (_hasNotificationsOn) {
+			_hasNotificationsOn = false;
+
+		} else {
+			_hasNotificationsOn = true;
+		}
+	}
+
+	public void getNotificationCurrentState() {
+		return _hasNotificationsOn;
+	}
+
+	public void addNotification(Notification n) {
+
+		if (_hasNotificationsOn) {
+
+			_notifications.add(n);
+
+		}
+
+	} */
+
 	abstract Discipline getDiscipline(String disciplineName);
 
 	protected abstract String getPersonType();
+
 	protected String getPersonBasicInfo() {
 		return "|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
 	}
+
 	protected abstract String getPersonDisciplines();
 
 	@Override

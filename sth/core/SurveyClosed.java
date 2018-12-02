@@ -32,6 +32,6 @@ public class SurveyClosed extends SurveyState implements java.io.Serializable {
 	}
 
 	String getResults(Person person, String disciplineName, Project project, boolean smallFormat) {
-		return super.getResults(person, disciplineName, project, smallFormat) + " fechado\n";
+		return super.getResults(person, disciplineName, project, smallFormat) + " (fechado)\n";
 	}
 }
