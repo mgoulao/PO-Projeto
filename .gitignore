@@ -36,5 +36,3 @@ relative/path/to/dir/anotherfile
 *.diff
 
 *.outhyp
-
-**/tests

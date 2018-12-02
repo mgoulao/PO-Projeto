@@ -372,7 +372,7 @@ public class SchoolManager implements java.io.Serializable {
 		}
 
 		Project project = discipline.getProjects().get(projectName);
-		if (project == null) {
+		if (project == null || project.isClosed()) {
 			throw new NoSuchProjectIdException(projectName);
 		}
 
