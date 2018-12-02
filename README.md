@@ -32,7 +32,7 @@
 * 4.4.2 Fechar projecto &#9745;
 * 4.4.3 Ver submissoes de um projecto
 * 4.4.4 Ver alunos de disciplina leccionada &#9745;
-* 4.4.5 Ver resultados de um inquerito
+* 4.4.5 Ver resultados de um inquerito &#9745;
 
 ### 4.5 Portal do Estudante
 

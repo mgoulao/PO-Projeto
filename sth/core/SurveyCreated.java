@@ -25,6 +25,7 @@ public class SurveyCreated extends SurveyState implements java.io.Serializable {
 			throw new OpeningSurveyException(disciplineName, project.getName());
 		}
 		_survey.setState(new SurveyOpen(_survey));
+		_survey.notifyObservers("Pode preencher inquérito do projecto "+ project.getName() +" da disciplina "+ disciplineName+ "\n");
 	}
 
 	void close(String disciplineName, Project project) throws ProjectException {

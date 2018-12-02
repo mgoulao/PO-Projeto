@@ -364,8 +364,23 @@ public class SchoolManager implements java.io.Serializable {
 
 	public void createSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
-		Project project = getCourseProject(disciplineName, projectName);
-		project.addSurvey(disciplineName);
+		Student representative = (Student) _user;
+		Course course = representative.getCourse();
+		Discipline discipline = course.getDiscipline(disciplineName);
+		if (discipline == null) {
+			throw new NoSuchDisciplineIdException(disciplineName);
+		}
+
+		Project project = discipline.getProjects().get(projectName);
+		if (project == null) {
+			throw new NoSuchProjectIdException(projectName);
+		}
+
+		Collection<Person> observers = new ArrayList<>();
+		observers.addAll(discipline.getStudents());
+		observers.addAll(discipline.getTeachers());
+
+		project.addSurvey(disciplineName, observers);
 	}
 
 	public void cancelSurvey(String disciplineName, String projectName)
@@ -413,14 +428,6 @@ public class SchoolManager implements java.io.Serializable {
 		survey.submitAnswer(disciplineName, project, (Student) _user, time, comment);
 	}
 
-	/*
-	 * public String teacherShowResults(String disciplineName, String projectName)
-	 * throws NoSuchDisciplineIdException, NoSuchProjectIdException,
-	 * ProjectException { Project project = getProject(disciplineName, projectName);
-	 * Survey survey = project.getSurvey(); return
-	 * survey.getResultsFor((Teacher)_user); }
-	 */
-
 	public String showSurveyResults(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
 		Project project = getProject(disciplineName, projectName);
@@ -445,6 +452,10 @@ public class SchoolManager implements java.io.Serializable {
 			}
 		}
 		return res;
+	}
+
+	public String getNotifications() {
+		return _user.getNotifications();
 	}
 
 }

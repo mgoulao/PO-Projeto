@@ -1,7 +1,9 @@
 package sth.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
+import java.util.Observable;
 import java.util.TreeMap;
 
 import sth.app.exception.NoSuchProjectException;
@@ -14,14 +16,16 @@ public class Survey implements java.io.Serializable {
 	private static final long serialVersionUID = 201811111809L;
 
 	private SurveyState _state;
-	private ArrayList<Student> _filledIn = new ArrayList<>();
-	private ArrayList<Answer> _answers = new ArrayList<>();
+	private Collection<Student> _filledIn = new ArrayList<>();
+	private Collection<Answer> _answers = new ArrayList<>();
+	private Collection<Person> _observers;
 
 	/**
 	 * Survey constructer
 	 */
-	Survey() {
+	Survey(Collection<Person> observers) {
 		_state = new SurveyCreated(this);
+		_observers = new ArrayList<>(observers);
 	}
 
 	protected void setState(SurveyState state) {
@@ -98,4 +102,9 @@ public class Survey implements java.io.Serializable {
 		return min;
 	}
 
+	void notifyObservers(String message) {
+		for(Person person : _observers) {
+			person.update(new Notification(message));
+		}
+	}
 }

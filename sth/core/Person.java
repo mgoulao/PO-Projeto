@@ -1,6 +1,10 @@
 package sth.core;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
+
+import java.util.ArrayList;
 
 import sth.core.exception.BadEntryException;
 
@@ -11,8 +15,7 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	private String _name;
 	private int _id;
 	private int _phoneNumber;
-	/* private ArrayList<Notification> _notifications = new ArrayList<Notification>();
-	private boolean _hasNotificationsOn; */
+	private Collection<Notification> _notifications = new ArrayList<>();
 
 	/**
 	 * @param id
@@ -20,9 +23,9 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	 * @param name
 	 */
 	public Person(int id, int phoneNumber, String name) {
-		this._name = name;
-		this._id = id;
-		this._phoneNumber = phoneNumber;
+		_name = name;
+		_id = id;
+		_phoneNumber = phoneNumber;
 	}
 
 	/**
@@ -67,28 +70,22 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		_name = name;
 	}
 
-	/* public void changeNotificationsSettings() {
-		if (_hasNotificationsOn) {
-			_hasNotificationsOn = false;
-
-		} else {
-			_hasNotificationsOn = true;
+	public String getNotifications() {
+		String res = "";
+		Iterator<Notification> iterator = _notifications.iterator();
+		while(iterator.hasNext()) {
+			Notification notification = iterator.next();
+			res += notification.getMessage();
+			iterator.remove();
 		}
+		return res;
 	}
 
-	public void getNotificationCurrentState() {
-		return _hasNotificationsOn;
-	}
+	public void update(Notification notification) {
+		_notifications.add(notification);
+	} 
 
-	public void addNotification(Notification n) {
 
-		if (_hasNotificationsOn) {
-
-			_notifications.add(n);
-
-		}
-
-	} */
 
 	abstract Discipline getDiscipline(String disciplineName);
 

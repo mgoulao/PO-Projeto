@@ -1,14 +1,16 @@
 package sth.core;
 
-public class Notification{
+public class Notification implements java.io.Serializable {
+
+	private static final long serialVersionUID = 201812022208L;
 
 	private String _message;
 
-	public Notification(String message){
+	public Notification(String message) {
 		_message = message;
 	}
 
-	public String getMessage(){
+	public String getMessage() {
 		return _message;
 	}
 }

@@ -36,6 +36,8 @@ public class DoOpen extends Command<SchoolManager> {
     try {
       _receiver.findPersonIdInFile(_file.value());
       _receiver.doLoad(_file.value());
+      _display.addLine(_receiver.getNotifications());
+      _display.display();
     } catch (NoSuchPersonIdException e) {
       throw new NoSuchPersonException(e.getId());
     } catch (FileNotFoundException fnfe) {

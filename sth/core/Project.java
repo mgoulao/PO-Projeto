@@ -93,11 +93,11 @@ public class Project implements java.io.Serializable {
 		_survey = null;
 	}
 
-	void addSurvey(String disciplineName) throws ProjectException {
+	void addSurvey(String disciplineName, Collection<Person> observers) throws ProjectException {
 		if (_survey != null) {
 			throw new DuplicateSurveyException(disciplineName, _name);
 		}
-		_survey = new Survey();
+		_survey = new Survey(observers);
 		if (isClosed())
 			_survey.open(disciplineName, this);
 	}
