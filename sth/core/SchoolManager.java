@@ -376,9 +376,10 @@ public class SchoolManager implements java.io.Serializable {
 			throw new NoSuchProjectIdException(projectName);
 		}
 
-		Collection<Person> observers = new ArrayList<>();
+		Collection<Person> observers = new TreeSet<>();
 		observers.addAll(discipline.getStudents());
 		observers.addAll(discipline.getTeachers());
+		observers.addAll(course.getRepresentatives());
 
 		project.addSurvey(disciplineName, observers);
 	}

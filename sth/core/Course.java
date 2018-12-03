@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import sth.core.Discipline;
 import sth.core.Student;
@@ -60,6 +61,10 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 		if (_representatives.contains(s)) {
 			_representatives.remove(s);
 		}
+	}
+
+	List<Student> getRepresentatives() {
+		return _representatives;
 	}
 	
 	/**
