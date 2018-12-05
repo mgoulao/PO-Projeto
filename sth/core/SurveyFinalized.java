@@ -1,8 +1,8 @@
 package sth.core;
 
-import sth.app.exception.ProjectException;
-import sth.app.exception.SurveyFinishedException;
-import sth.app.exception.NoSurveyException;
+import sth.core.exception.ProjectException;
+import sth.core.exception.SurveyFinishedException;
+import sth.core.exception.NoSurveyException;
 
 import sth.core.Student;
 
@@ -14,15 +14,15 @@ public class SurveyFinalized extends SurveyState implements java.io.Serializable
 		super(survey);
 	}
 
-	void cancel(String disciplineName, Project project) throws ProjectException {
+	void cancel(String disciplineName, Project project) throws SurveyFinishedException {
 		throw new SurveyFinishedException(disciplineName, project.getName());
 	}
 
-	void open(String disciplineName, Project project) throws ProjectException {
+	void open(String disciplineName, Project project) throws SurveyFinishedException {
 		throw new SurveyFinishedException(disciplineName, project.getName());
 	}
 
-	void close(String disciplineName, Project project) throws ProjectException {
+	void close(String disciplineName, Project project) throws SurveyFinishedException {
 		throw new SurveyFinishedException(disciplineName, project.getName());
 	}
 
@@ -31,7 +31,7 @@ public class SurveyFinalized extends SurveyState implements java.io.Serializable
 	}
 
 	void submit(String disciplineName, Project project, Student student, int time, String comment)
-			throws ProjectException {
+			throws NoSurveyException {
 		throw new NoSurveyException(disciplineName, project.getName());
 	}
 

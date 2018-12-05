@@ -28,8 +28,7 @@ import java.util.Comparator;
 
 import sth.core.Teacher;
 import sth.core.Student;
-import sth.app.exception.NoSurveyException;
-import sth.app.exception.ProjectException;
+import sth.core.exception.*;
 import sth.core.Employee;
 
 /**
@@ -362,8 +361,8 @@ public class SchoolManager implements java.io.Serializable {
 		return project;
 	}
 
-	public void createSurvey(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+	public void createSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		Student representative = (Student) _user;
 		Course course = representative.getCourse();
 		Discipline discipline = course.getDiscipline(disciplineName);
@@ -384,8 +383,8 @@ public class SchoolManager implements java.io.Serializable {
 		project.addSurvey(disciplineName, observers);
 	}
 
-	public void cancelSurvey(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+	public void cancelSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, SurveyFinishedException, NonEmptySurveyException, NoSurveyException {
 
 		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
@@ -394,8 +393,8 @@ public class SchoolManager implements java.io.Serializable {
 		survey.cancel(disciplineName, project);
 	}
 
-	public void openSurvey(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+	public void openSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, SurveyFinishedException, OpeningSurveyException, NoSurveyException {
 		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		if (survey == null)
@@ -403,8 +402,8 @@ public class SchoolManager implements java.io.Serializable {
 		survey.open(disciplineName, project);
 	}
 
-	public void closeSurvey(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+	public void closeSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, SurveyFinishedException, ClosingSurveyException, NoSurveyException {
 		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		if (survey == null)
@@ -413,7 +412,7 @@ public class SchoolManager implements java.io.Serializable {
 	}
 
 	public void finalizeSurvey(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, FinishingSurveyException, NoSurveyException {
 
 		Project project = getCourseProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
@@ -423,7 +422,7 @@ public class SchoolManager implements java.io.Serializable {
 	}
 
 	public void addSurveyAnswer(String disciplineName, String projectName, int time, String comment)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException, ProjectException {
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException, NoSuchProjectException {
 		Project project = getProject(disciplineName, projectName);
 		Survey survey = project.getSurvey();
 		survey.submitAnswer(disciplineName, project, (Student) _user, time, comment);

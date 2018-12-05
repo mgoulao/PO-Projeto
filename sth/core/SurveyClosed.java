@@ -1,7 +1,7 @@
 package sth.core;
 
-import sth.app.exception.NoSurveyException;
-import sth.app.exception.ProjectException;
+import sth.core.exception.NoSurveyException;
+import sth.core.exception.ProjectException;
 
 public class SurveyClosed extends SurveyState implements java.io.Serializable {
 
@@ -27,7 +27,7 @@ public class SurveyClosed extends SurveyState implements java.io.Serializable {
 		_survey.setState(new SurveyFinalized(_survey));
 	}
 
-	void submit(String disciplineName, Project project, Student student, int time, String comment) throws ProjectException {
+	void submit(String disciplineName, Project project, Student student, int time, String comment) throws NoSurveyException {
 		throw new NoSurveyException(disciplineName, project.getName());
 	}
 

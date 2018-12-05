@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.TreeMap;
 
-import sth.app.exception.NoSuchProjectException;
-import sth.app.exception.ProjectException;
+import sth.core.exception.*;
 
 import sth.core.Answer;
 
@@ -32,24 +31,24 @@ public class Survey implements java.io.Serializable {
 		_state = state;
 	}
 
-	void cancel(String disciplineName, Project project) throws ProjectException {
+	void cancel(String disciplineName, Project project) throws SurveyFinishedException, NonEmptySurveyException {
 		_state.cancel(disciplineName, project);
 	}
 
-	void open(String disciplineName, Project project) throws ProjectException {
+	void open(String disciplineName, Project project) throws SurveyFinishedException, OpeningSurveyException {
 		_state.open(disciplineName, project);
 	}
 
-	void close(String disciplineName, Project project) throws ProjectException {
+	void close(String disciplineName, Project project) throws SurveyFinishedException, ClosingSurveyException {
 		_state.close(disciplineName, project);
 	}
 
-	void finalizeSurvey(String disciplineName, Project project) throws ProjectException {
+	void finalizeSurvey(String disciplineName, Project project) throws FinishingSurveyException {
 		_state.finalizeSurvey(disciplineName, project);
 	}
 
 	void submitAnswer(String disciplineName, Project project, Student student, int time, String comment)
-			throws ProjectException {
+			throws NoSurveyException, NoSuchProjectException {
 		if (!_filledIn.contains(student)) {
 			_state.submit(disciplineName, project, student, time, comment);
 		}
@@ -99,6 +98,8 @@ public class Survey implements java.io.Serializable {
 			if(time < min)
 				min = time;
 		}
+		if(min == Integer.MAX_VALUE)
+			min = 0;
 		return min;
 	}
 

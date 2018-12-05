@@ -1,10 +1,10 @@
 package sth.core;
 
-import sth.app.exception.OpeningSurveyException;
-import sth.app.exception.ProjectException;
-import sth.app.exception.ClosingSurveyException;
-import sth.app.exception.FinishingSurveyException;
-import sth.app.exception.NoSurveyException;
+import sth.core.exception.OpeningSurveyException;
+import sth.core.exception.ProjectException;
+import sth.core.exception.ClosingSurveyException;
+import sth.core.exception.FinishingSurveyException;
+import sth.core.exception.NoSurveyException;
 
 import sth.core.Project;
 
@@ -20,7 +20,7 @@ public class SurveyCreated extends SurveyState implements java.io.Serializable {
 		project.removeSurvey();
 	}
 
-	void open(String disciplineName, Project project) throws ProjectException {
+	void open(String disciplineName, Project project) throws OpeningSurveyException {
 		if (!project.isClosed()) {
 			throw new OpeningSurveyException(disciplineName, project.getName());
 		}
@@ -28,15 +28,15 @@ public class SurveyCreated extends SurveyState implements java.io.Serializable {
 		_survey.notifyObservers("Pode preencher inquérito do projecto "+ project.getName() +" da disciplina "+ disciplineName+ "\n");
 	}
 
-	void close(String disciplineName, Project project) throws ProjectException {
+	void close(String disciplineName, Project project) throws ClosingSurveyException {
 		throw new ClosingSurveyException(disciplineName, project.getName());
 	}
 
-	void finalizeSurvey(String disciplineName, Project project) throws ProjectException {
+	void finalizeSurvey(String disciplineName, Project project) throws FinishingSurveyException {
 		throw new FinishingSurveyException(disciplineName, project.getName());
 	}
 
-	void submit(String disciplineName, Project project, Student student, int time, String comment) throws ProjectException {
+	void submit(String disciplineName, Project project, Student student, int time, String comment) throws NoSurveyException {
 		throw new NoSurveyException(disciplineName, project.getName());
 	}
 

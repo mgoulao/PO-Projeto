@@ -1,10 +1,10 @@
 package sth.core;
 
-import sth.app.exception.NonEmptySurveyException;
-import sth.app.exception.ProjectException;
-import sth.app.exception.FinishingSurveyException;
-import sth.app.exception.NoSuchProjectException;
-import sth.app.exception.NoSurveyException;
+import sth.core.exception.NonEmptySurveyException;
+import sth.core.exception.ProjectException;
+import sth.core.exception.FinishingSurveyException;
+import sth.core.exception.NoSuchProjectException;
+import sth.core.exception.NoSurveyException;
 
 import sth.core.Project;
 
@@ -16,7 +16,7 @@ public class SurveyOpen extends SurveyState implements java.io.Serializable {
 		super(survey);
 	}
 
-	void cancel(String disciplineName, Project project) throws ProjectException {
+	void cancel(String disciplineName, Project project) throws NonEmptySurveyException {
 		if (_survey.getNumberAnswers() > 0) {
 			throw new NonEmptySurveyException(disciplineName, project.getName());
 		}
@@ -31,12 +31,12 @@ public class SurveyOpen extends SurveyState implements java.io.Serializable {
 		_survey.setState(new SurveyClosed(_survey));
 	}
 
-	void finalizeSurvey(String disciplineName, Project project) throws ProjectException {
+	void finalizeSurvey(String disciplineName, Project project) throws FinishingSurveyException {
 		throw new FinishingSurveyException(disciplineName, project.getName());
 	}
 
 	void submit(String disciplineName, Project project, Student student, int time, String comment)
-			throws ProjectException {
+			throws NoSuchProjectException {
 		if (!project.studentSubmitedProject(student)) {
 			throw new NoSuchProjectException(disciplineName, project.getName());
 		}

@@ -9,8 +9,7 @@ import java.util.TreeMap;
 import java.util.Set;
 import java.util.TreeSet;
 
-import sth.app.exception.DuplicateSurveyException;
-import sth.app.exception.ProjectException;
+import sth.core.exception.*;
 import sth.core.Student;
 import sth.core.Submission;
 
@@ -49,7 +48,7 @@ public class Project implements java.io.Serializable {
 			try {
 				_survey.open(disciplineName, this);
 			} catch (ProjectException e) {
-				//TODO: Verificar isto -> Esta excessao nunca ocorre
+				// TODO: Verificar isto -> Esta excessao nunca ocorre
 			}
 		}
 	}
@@ -93,7 +92,8 @@ public class Project implements java.io.Serializable {
 		_survey = null;
 	}
 
-	void addSurvey(String disciplineName, Collection<Person> observers) throws ProjectException {
+	void addSurvey(String disciplineName, Collection<Person> observers)
+			throws DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		if (_survey != null) {
 			throw new DuplicateSurveyException(disciplineName, _name);
 		}

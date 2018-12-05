@@ -23,8 +23,12 @@ public class DoShowSurveyResults extends sth.app.common.ProjectCommand {
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void myExecute() throws NoSuchProjectIdException, NoSuchDisciplineIdException, NoSurveyException {
-    _display.addLine(_receiver.showSurveyResults(_discipline.value(), _project.value()));
-    _display.display();
+    try {
+      _display.addLine(_receiver.showSurveyResults(_discipline.value(), _project.value()));
+      _display.display();
+    } catch (sth.core.exception.NoSurveyException e) {
+      throw new sth.app.exception.NoSurveyException(e.getDisciplineId(), e.getProjectId());
+    }
   }
 
 }
