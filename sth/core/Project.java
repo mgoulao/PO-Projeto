@@ -55,6 +55,9 @@ public class Project implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @return true if project is closed
+	 */
 	boolean isClosed() {
 		return _closed;
 	}
@@ -82,18 +85,34 @@ public class Project implements java.io.Serializable {
 		return _submissions;
 	}
 
+	/**
+	 * @return number of submissions
+	 */
 	int getNumberSubmissions() {
 		return _submissions.size();
 	}
 
+	/**
+	 * @return Survey
+	 */
 	Survey getSurvey() {
 		return _survey;
 	}
 
+	/**
+	 * Remove survey from Project
+	 */
 	void removeSurvey() {
 		_survey = null;
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param observers
+	 * @throws DuplicateSurveyException
+	 * @throws SurveyFinishedException
+	 * @throws OpeningSurveyException
+	 */
 	void addSurvey(String disciplineName, Collection<Person> observers)
 			throws DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		if (_survey != null) {
@@ -104,6 +123,10 @@ public class Project implements java.io.Serializable {
 			_survey.open(disciplineName, this);
 	}
 
+	/**
+	 * @param student
+	 * @return true if student has submited
+	 */
 	boolean studentSubmitedProject(Student student) {
 		for (Submission subm : _submissions) {
 			if (subm.getStudentID() == student.getID()) {

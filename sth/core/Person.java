@@ -70,6 +70,9 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		_name = name;
 	}
 
+	/**
+	 * @return String with notifications
+	 */
 	public String getNotifications() {
 		String res = "";
 		Iterator<Notification> iterator = _notifications.iterator();
@@ -81,10 +84,20 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		return res;
 	}
 
+	/**
+	 * @param notification
+	 */
 	public void update(Notification notification) {
 		_notifications.add(notification);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return Project
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 */
 	protected Project getProject(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 		Discipline discipline = getDiscipline(disciplineName);
@@ -99,18 +112,39 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		return project;
 	}
 
+	/**
+	 * @param numberSubmission
+	 * @param numberAnswers
+	 * @param min
+	 * @param max
+	 * @param avg
+	 * @return String with survey results
+	 */
 	String surveyResultsFormat(int numberSubmission, int numberAnswers, int min, int max, int avg) {
 		return "";
 	}
 
+	/**
+	 * @param disciplineName
+	 * @return Discipline
+	 */
 	abstract Discipline getDiscipline(String disciplineName);
 
+	/**
+	 * @return Person type title
+	 */
 	protected abstract String getPersonType();
 
+	/**
+	 * @return Person basic info
+	 */
 	protected String getPersonBasicInfo() {
 		return "|" + getID() + "|" + getPhoneNumber() + "|" + getName() + "\n";
 	}
 
+	/**
+	 * @return String with list of disciplines
+	 */
 	protected abstract String getPersonDisciplines();
 
 	@Override

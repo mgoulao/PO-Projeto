@@ -11,6 +11,7 @@ import sth.core.Student;
 import sth.core.Teacher;
 import sth.core.Project;
 
+
 public class Discipline implements Comparable<Discipline>, java.io.Serializable {
 
 	private static final long serialVersionUID = 201811111808L;

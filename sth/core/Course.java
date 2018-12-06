@@ -35,12 +35,11 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 	}
 
 	/**
-	 * @param disciplines
+	 * @param discipline
 	 */
 	void addDiscipline(Discipline discipline) {
 		_disciplines.put(discipline.getName(), discipline);
 	}
-
 	
 	/**
 	 * @param s
@@ -63,6 +62,9 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @return List with Course representatives
+	 */
 	List<Student> getRepresentatives() {
 		return _representatives;
 	}
@@ -74,10 +76,17 @@ public class Course implements Comparable<Course>, java.io.Serializable {
 		_students.add(student);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @return Discipline
+	 */
 	Discipline getDiscipline(String disciplineName) {
 		return _disciplines.get(disciplineName);
 	}
-	
+
+	/**
+	 * @return Map with disciplines
+	 */
 	Map<String, Discipline> getDisciplines() {
 		return _disciplines;
 	}

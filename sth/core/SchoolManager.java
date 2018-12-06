@@ -194,6 +194,7 @@ public class SchoolManager implements java.io.Serializable {
 	}
 
 	/**
+	 * @param phoneNumber
 	 * @return Person String with the new phone number
 	 */
 	public String changePhoneNumber(int phoneNumber) {
@@ -201,9 +202,10 @@ public class SchoolManager implements java.io.Serializable {
 		return _user.toString();
 	}
 
+
 	/**
 	 * @param name
-	 * @return String with all users that have the name
+	 * @return Person string
 	 */
 	public String searchPerson(String name) {
 		List<Person> users = _school.searchPerson(name);
@@ -223,8 +225,8 @@ public class SchoolManager implements java.io.Serializable {
 	/**
 	 * @param disciplineName
 	 * @param projectName
-	 * @return true if the project was created
 	 * @throws NoSuchDisciplineIdException
+	 * @throws DuplicateProjectException
 	 */
 	public void createProject(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, DuplicateProjectException {
@@ -232,9 +234,12 @@ public class SchoolManager implements java.io.Serializable {
 		teacher.createProject(disciplineName, projectName);
 	}
 
+
 	/**
 	 * @param disciplineName
 	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
 	 */
 	public void closeProject(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
@@ -274,7 +279,7 @@ public class SchoolManager implements java.io.Serializable {
 	/**
 	 * @param disciplineName
 	 * @param projectName
-	 * @param text
+	 * @param answer
 	 * @throws NoSuchDisciplineIdException
 	 * @throws NoSuchProjectIdException
 	 */
@@ -284,6 +289,13 @@ public class SchoolManager implements java.io.Serializable {
 		student.submitProject(disciplineName, projectName, answer);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return Project submissions
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 */
 	public String showProjectSubmissions(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 		Teacher teacher = (Teacher) _user;
@@ -308,59 +320,137 @@ public class SchoolManager implements java.io.Serializable {
 		return res;
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws DuplicateSurveyException
+	 * @throws SurveyFinishedException
+	 * @throws OpeningSurveyException
+	 */
 	public void createSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		Student representative = (Student) _user;
 		representative.createSurvey(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws SurveyFinishedException
+	 * @throws NonEmptySurveyException
+	 * @throws NoSurveyException
+	 */
 	public void cancelSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, NonEmptySurveyException, NoSurveyException {
 		Student representative = (Student) _user;
 		representative.cancelSurvey(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws SurveyFinishedException
+	 * @throws OpeningSurveyException
+	 * @throws NoSurveyException
+	 */
 	public void openSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, OpeningSurveyException, NoSurveyException {
 		Student representative = (Student) _user;
 		representative.openSurvey(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws SurveyFinishedException
+	 * @throws ClosingSurveyException
+	 * @throws NoSurveyException
+	 */
 	public void closeSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, ClosingSurveyException, NoSurveyException {
 		Student representative = (Student) _user;
 		representative.closeSurvey(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws FinishingSurveyException
+	 * @throws NoSurveyException
+	 */
 	public void finalizeSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, FinishingSurveyException, NoSurveyException {
 		Student representative = (Student) _user;
 		representative.finalizeSurvey(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @param time
+	 * @param comment
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws NoSurveyException
+	 * @throws NoSuchProjectException
+	 */
 	public void addSurveyAnswer(String disciplineName, String projectName, int time, String comment)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException, NoSuchProjectException {
 		Student student = (Student) _user;
 		student.submitAnswerToSurvey(disciplineName, projectName, time, comment);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return survey results
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws NoSurveyException
+	 */
 	public String showSurveyResults(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
 		Student student = (Student) _user;
 		return student.showSurveyResults(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return survey results teacher format
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws NoSurveyException
+	 */
 	public String showTeacherSurveyResults(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
 		Teacher teacher = (Teacher) _user;
 		return teacher.showSurveyResults(disciplineName, projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @return Discipline survey results
+	 * @throws NoSuchDisciplineIdException
+	 */
 	public String showDisciplineSurveyResults(String disciplineName) throws NoSuchDisciplineIdException {
 		Student representative = (Student) _user;
 		return representative.showDisciplineSurveyResults(disciplineName);
 	}
 
+	/**
+	 * @return User notifications
+	 */
 	public String getNotifications() {
 		return _user.getNotifications();
 	}

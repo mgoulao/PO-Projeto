@@ -31,6 +31,9 @@ public class School implements java.io.Serializable {
   private Map<String, Course> _courses;
   private Map<Integer, Person> _users;
 
+  /**
+   * School constructor
+   */
   School() {
     _name = "Lobachevsky";
     _courses = new HashMap<>();
