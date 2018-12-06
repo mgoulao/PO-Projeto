@@ -6,7 +6,7 @@ package sth.core.exception;
 public abstract class ProjectException extends Exception {
 
   /** Serial number for serialization. */
-  private static final long serialVersionUID = 201810051538L;
+  private static final long serialVersionUID = 201812061037L;
 
   /** Discipline name. */
   protected final String _discipline;

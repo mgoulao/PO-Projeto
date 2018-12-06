@@ -27,8 +27,10 @@ public class DoCreateProject extends sth.app.common.ProjectCommand {
       throws DialogException, NoSuchDisciplineIdException, NoSuchProjectIdException, DuplicateProjectException {
     String discName = _discipline.value();
     String projectName = _project.value();
-    if (!_receiver.createProject(discName, projectName)) {
-      throw new DuplicateProjectException(discName, projectName);
+    try {
+      _receiver.createProject(discName, projectName);
+    } catch(sth.core.exception.DuplicateProjectException e) {
+      throw new sth.app.exception.DuplicateProjectException(discName, projectName);
     }
   }
 

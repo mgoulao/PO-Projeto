@@ -1,6 +1,6 @@
 package sth.core;
 
-import sth.core.exception.BadEntryException;
+import sth.core.exception.*;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -34,15 +34,38 @@ public class Teacher extends Person implements java.io.Serializable {
 	 * @param name
 	 * @param descricao
 	 */
-	public void createProject(String name, String descricao) {
-		// FIXME: Implementar entrega final
+	public void createProject(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, DuplicateProjectException {
+		Discipline discipline = getDisciplines().get(disciplineName);
+
+		if (discipline == null)
+			throw new NoSuchDisciplineIdException(disciplineName);
+
+		if (discipline.getProjects().get(projectName) != null)
+			throw new DuplicateProjectException(disciplineName, projectName);
+
+		discipline.addProject(new Project(projectName));
 	}
 
 	/**
 	 * @param p
 	 */
-	public void closeProject(Project p) {
-		// FIXME: Implementar entrega final
+	public void closeProject(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+		Discipline discipline = null;
+		Project project = null;
+
+		discipline = getDisciplines().get(disciplineName);
+
+		if (discipline == null)
+			throw new NoSuchDisciplineIdException(disciplineName);
+
+		project = discipline.getProjects().get(projectName);
+
+		if (project == null)
+			throw new NoSuchProjectIdException(projectName);
+
+		project.close(disciplineName);
 	}
 
 	/**
@@ -93,6 +116,25 @@ public class Teacher extends Person implements java.io.Serializable {
 			disciplines.putAll(entry.getValue());
 		}
 		return disciplines;
+	}
+
+	@Override
+	String surveyResultsFormat(int numberSubmission, int numberAnswers, int min, int max, int avg) {
+		String res = "";
+		res += "\n * Número de submissões: " + numberSubmission + "\n";
+		res += " * Número de respostas: " + numberAnswers + "\n";
+		res += " * Tempos de resolução (horas) (mínimo, médio, máximo): " + min + ", "
+				+ avg + ", " + max + "\n";
+		return res;
+	}
+
+	String showSurveyResults(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
+		Project project = getProject(disciplineName, projectName);
+		Survey survey = project.getSurvey();
+		if (survey == null)
+			throw new NoSurveyException(disciplineName, projectName);
+		return survey.getResultsFor(this, disciplineName, project, true);
 	}
 
 	/**

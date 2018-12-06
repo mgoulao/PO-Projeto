@@ -1,8 +1,7 @@
 package sth.core;
 
-import sth.core.exception.BadEntryException;
-import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchProjectIdException;
+import sth.core.exception.*;
+
 import sth.core.Discipline;
 import sth.core.Submission;
 import sth.core.Answer;
@@ -12,8 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
 import java.util.ArrayList;
+import java.util.Collection;
 
 import sth.core.Discipline;
 import sth.core.Survey;
@@ -92,31 +91,127 @@ public class Student extends Person implements java.io.Serializable {
 			throw new NoSuchProjectIdException(projectName);
 	}
 
+	private Project getCourseProject(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+		Course course = getCourse();
+		Discipline discipline = course.getDiscipline(disciplineName);
+		if (discipline == null) {
+			throw new NoSuchDisciplineIdException(disciplineName);
+		}
+
+		Project project = discipline.getProjects().get(projectName);
+		if (project == null) {
+			throw new NoSuchProjectIdException(projectName);
+		}
+
+		return project;
+	}
+
 	/**
 	 * @param numberOfHours
 	 * @param comment
 	 */
-	void submitAnswerToSurvey(int numberOfHours, String comment) {
-		// FIXME: implement
+	void submitAnswerToSurvey(String disciplineName, String projectName, int time, String comment)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException, NoSuchProjectException {
+		Project project = getProject(disciplineName, projectName);
+		Survey survey = project.getSurvey();
+		if (survey == null)
+			throw new NoSurveyException(disciplineName, projectName);
+		survey.submitAnswer(disciplineName, project, this, time, comment);
 	}
 
-	/**
-	 * @param survey
-	 * @param state
-	 */
-	public void setSurveyState(Survey survey, String state) {
-		if (_representative == true) {
-			// FIXME: implement
+	void createSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
+		if (isRepresentative()) {
+			Course course = getCourse();
+			Discipline discipline = course.getDiscipline(disciplineName);
+			if (discipline == null) {
+				throw new NoSuchDisciplineIdException(disciplineName);
+			}
+
+			Project project = discipline.getProjects().get(projectName);
+			if (project == null || project.isClosed()) {
+				throw new NoSuchProjectIdException(projectName);
+			}
+
+			Collection<Person> observers = new TreeSet<>();
+			observers.addAll(discipline.getStudents());
+			observers.addAll(discipline.getTeachers());
+			observers.addAll(course.getRepresentatives());
+
+			project.addSurvey(disciplineName, observers);
 		}
 	}
 
-	/**
-	 * Add a survey
-	 */
-	void addSurvey() {
-		if (_representative == true) {
-			// FIXME: implement
+	public void cancelSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, SurveyFinishedException, NonEmptySurveyException, NoSurveyException {
+		if (isRepresentative()) {
+			Project project = getCourseProject(disciplineName, projectName);
+			Survey survey = project.getSurvey();
+			if (survey == null)
+				throw new NoSurveyException(disciplineName, projectName);
+			survey.cancel(disciplineName, project);
 		}
+	}
+
+	public void openSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, SurveyFinishedException, OpeningSurveyException, NoSurveyException {
+		if (isRepresentative()) {
+			Project project = getCourseProject(disciplineName, projectName);
+			Survey survey = project.getSurvey();
+			if (survey == null)
+				throw new NoSurveyException(disciplineName, projectName);
+			survey.open(disciplineName, project);
+		}
+	}
+
+	public void closeSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
+			NoSuchProjectIdException, SurveyFinishedException, ClosingSurveyException, NoSurveyException {
+		if (isRepresentative()) {
+			Project project = getCourseProject(disciplineName, projectName);
+			Survey survey = project.getSurvey();
+			if (survey == null)
+				throw new NoSurveyException(disciplineName, projectName);
+			survey.close(disciplineName, project);
+		}
+	}
+
+	public void finalizeSurvey(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, FinishingSurveyException, NoSurveyException {
+		if (isRepresentative()) {
+			Project project = getCourseProject(disciplineName, projectName);
+			Survey survey = project.getSurvey();
+			if (survey == null)
+				throw new NoSurveyException(disciplineName, projectName);
+			survey.finalizeSurvey(disciplineName, project);
+		}
+	}
+
+	public String showSurveyResults(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
+		Project project = getProject(disciplineName, projectName);
+		Survey survey = project.getSurvey();
+		if (survey == null)
+			throw new NoSurveyException(disciplineName, projectName);
+		return survey.getResultsFor(this, disciplineName, project, false);
+	}
+
+	public String showDisciplineSurveyResults(String disciplineName) throws NoSuchDisciplineIdException {
+		String res = "";
+		if (isRepresentative()) {
+			Course course = getCourse();
+			Discipline discipline = course.getDiscipline(disciplineName);
+			if (discipline == null)
+				throw new NoSuchDisciplineIdException(disciplineName);
+			for (Map.Entry<String, Project> entry : discipline.getProjects().entrySet()) {
+				Project project = entry.getValue();
+				Survey survey = project.getSurvey();
+				if (survey != null) {
+					res += survey.getResultsFor(this, disciplineName, project, true);
+				}
+			}
+		}
+		return res;
 	}
 
 	/**
@@ -133,6 +228,14 @@ public class Student extends Person implements java.io.Serializable {
 	@Override
 	Discipline getDiscipline(String disciplineName) {
 		return getDisciplines().get(disciplineName);
+	}
+
+	@Override
+	String surveyResultsFormat(int numberSubmission, int numberAnswers, int min, int max, int avg) {
+		String res = "";
+		res += "\n * Número de respostas: " + numberAnswers + "\n";
+		res += " * Tempo médio (horas): " + avg + "\n";
+		return res;
 	}
 
 	/**

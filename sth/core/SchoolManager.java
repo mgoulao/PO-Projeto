@@ -226,20 +226,10 @@ public class SchoolManager implements java.io.Serializable {
 	 * @return true if the project was created
 	 * @throws NoSuchDisciplineIdException
 	 */
-	public boolean createProject(String disciplineName, String projectName) throws NoSuchDisciplineIdException {
-		Discipline discipline = null;
+	public void createProject(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, DuplicateProjectException {
 		Teacher teacher = (Teacher) _user;
-
-		discipline = teacher.getDisciplines().get(disciplineName);
-
-		if (discipline == null)
-			throw new NoSuchDisciplineIdException(disciplineName);
-
-		if (discipline.getProjects().get(projectName) != null)
-			return false;
-
-		discipline.addProject(new Project(projectName));
-		return true;
+		teacher.createProject(disciplineName, projectName);
 	}
 
 	/**
@@ -249,20 +239,7 @@ public class SchoolManager implements java.io.Serializable {
 	public void closeProject(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 		Teacher teacher = (Teacher) _user;
-		Discipline discipline = null;
-		Project project = null;
-
-		discipline = teacher.getDisciplines().get(disciplineName);
-
-		if (discipline == null)
-			throw new NoSuchDisciplineIdException(disciplineName);
-
-		project = discipline.getProjects().get(projectName);
-
-		if (project == null)
-			throw new NoSuchProjectIdException(projectName);
-
-		project.close(disciplineName);
+		teacher.closeProject(disciplineName, projectName);
 	}
 
 	/**
@@ -331,127 +308,57 @@ public class SchoolManager implements java.io.Serializable {
 		return res;
 	}
 
-	private Project getCourseProject(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
-		Student representative = (Student) _user;
-		Course course = representative.getCourse();
-		Discipline discipline = course.getDiscipline(disciplineName);
-		if (discipline == null) {
-			throw new NoSuchDisciplineIdException(disciplineName);
-		}
-
-		Project project = discipline.getProjects().get(projectName);
-		if (project == null) {
-			throw new NoSuchProjectIdException(projectName);
-		}
-		return project;
-	}
-
-	private Project getProject(String disciplineName, String projectName)
-			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
-		Discipline discipline = _user.getDiscipline(disciplineName);
-		if (discipline == null) {
-			throw new NoSuchDisciplineIdException(disciplineName);
-		}
-
-		Project project = discipline.getProjects().get(projectName);
-		if (project == null) {
-			throw new NoSuchProjectIdException(projectName);
-		}
-		return project;
-	}
-
 	public void createSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		Student representative = (Student) _user;
-		Course course = representative.getCourse();
-		Discipline discipline = course.getDiscipline(disciplineName);
-		if (discipline == null) {
-			throw new NoSuchDisciplineIdException(disciplineName);
-		}
-
-		Project project = discipline.getProjects().get(projectName);
-		if (project == null || project.isClosed()) {
-			throw new NoSuchProjectIdException(projectName);
-		}
-
-		Collection<Person> observers = new TreeSet<>();
-		observers.addAll(discipline.getStudents());
-		observers.addAll(discipline.getTeachers());
-		observers.addAll(course.getRepresentatives());
-
-		project.addSurvey(disciplineName, observers);
+		representative.createSurvey(disciplineName, projectName);
 	}
 
 	public void cancelSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, NonEmptySurveyException, NoSurveyException {
-
-		Project project = getCourseProject(disciplineName, projectName);
-		Survey survey = project.getSurvey();
-		if (survey == null)
-			throw new NoSurveyException(disciplineName, projectName);
-		survey.cancel(disciplineName, project);
+		Student representative = (Student) _user;
+		representative.cancelSurvey(disciplineName, projectName);
 	}
 
 	public void openSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, OpeningSurveyException, NoSurveyException {
-		Project project = getCourseProject(disciplineName, projectName);
-		Survey survey = project.getSurvey();
-		if (survey == null)
-			throw new NoSurveyException(disciplineName, projectName);
-		survey.open(disciplineName, project);
+		Student representative = (Student) _user;
+		representative.openSurvey(disciplineName, projectName);
 	}
 
 	public void closeSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, ClosingSurveyException, NoSurveyException {
-		Project project = getCourseProject(disciplineName, projectName);
-		Survey survey = project.getSurvey();
-		if (survey == null)
-			throw new NoSurveyException(disciplineName, projectName);
-		survey.close(disciplineName, project);
+		Student representative = (Student) _user;
+		representative.closeSurvey(disciplineName, projectName);
 	}
 
 	public void finalizeSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, FinishingSurveyException, NoSurveyException {
-
-		Project project = getCourseProject(disciplineName, projectName);
-		Survey survey = project.getSurvey();
-		if (survey == null)
-			throw new NoSurveyException(disciplineName, projectName);
-		survey.finalizeSurvey(disciplineName, project);
+		Student representative = (Student) _user;
+		representative.finalizeSurvey(disciplineName, projectName);
 	}
 
 	public void addSurveyAnswer(String disciplineName, String projectName, int time, String comment)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException, NoSuchProjectException {
-		Project project = getProject(disciplineName, projectName);
-		Survey survey = project.getSurvey();
-		survey.submitAnswer(disciplineName, project, (Student) _user, time, comment);
+		Student student = (Student) _user;
+		student.submitAnswerToSurvey(disciplineName, projectName, time, comment);
 	}
 
 	public String showSurveyResults(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
-		Project project = getProject(disciplineName, projectName);
-		Survey survey = project.getSurvey();
-		if (survey == null)
-			throw new NoSurveyException(disciplineName, projectName);
-		return survey.getResultsFor(_user, disciplineName, project, false);
+		Student student = (Student) _user;
+		return student.showSurveyResults(disciplineName, projectName);
+	}
+
+	public String showTeacherSurveyResults(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
+		Teacher teacher = (Teacher) _user;
+		return teacher.showSurveyResults(disciplineName, projectName);
 	}
 
 	public String showDisciplineSurveyResults(String disciplineName) throws NoSuchDisciplineIdException {
-		String res = "";
 		Student representative = (Student) _user;
-		Course course = representative.getCourse();
-		Discipline discipline = course.getDiscipline(disciplineName);
-		if (discipline == null)
-			throw new NoSuchDisciplineIdException(disciplineName);
-		for (Map.Entry<String, Project> entry : discipline.getProjects().entrySet()) {
-			Project project = entry.getValue();
-			Survey survey = project.getSurvey();
-			if (survey != null) {
-				res += survey.getResultsFor(_user, disciplineName, project, true);
-			}
-		}
-		return res;
+		return representative.showDisciplineSurveyResults(disciplineName);
 	}
 
 	public String getNotifications() {

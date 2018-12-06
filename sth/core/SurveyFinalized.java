@@ -40,15 +40,8 @@ public class SurveyFinalized extends SurveyState implements java.io.Serializable
 		if (smallFormat) {
 			res += " - " + _survey.getNumberAnswers() + " respostas - " + _survey.getAvgTime() + " horas\n";
 		} else {
-			if (person instanceof Student) {
-				res += "\n * Número de respostas: " + _survey.getNumberAnswers() + "\n";
-				res += " * Tempo médio (horas): " + _survey.getAvgTime() + "\n";
-			} else {
-				res += "\n * Número de submissões: " + project.getNumberSubmissions() + "\n";
-				res += " * Número de respostas: " + _survey.getNumberAnswers() + "\n";
-				res += " * Tempos de resolução (horas) (mínimo, médio, máximo): " + _survey.getMinTime() + ", "
-						+ _survey.getAvgTime() + ", " + _survey.getMaxTime() + "\n";
-			}
+			person.surveyResultsFormat(project.getNumberSubmissions(), _survey.getNumberAnswers(), _survey.getMinTime(),
+					_survey.getMaxTime(), _survey.getAvgTime());
 		}
 		return res;
 	}

@@ -25,6 +25,7 @@ public class SurveyClosed extends SurveyState implements java.io.Serializable {
 
 	void finalizeSurvey(String disciplineName, Project project) {
 		_survey.setState(new SurveyFinalized(_survey));
+		_survey.notifyObservers("Resultados do inquérito do projecto "+ project.getName() +" da disciplina "+ disciplineName+ "\n");
 	}
 
 	void submit(String disciplineName, Project project, Student student, int time, String comment) throws NoSurveyException {

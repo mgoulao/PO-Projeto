@@ -6,7 +6,7 @@ import java.util.Map;
 
 import java.util.ArrayList;
 
-import sth.core.exception.BadEntryException;
+import sth.core.exception.*;
 
 public abstract class Person implements Comparable<Person>, java.io.Serializable {
 
@@ -73,7 +73,7 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	public String getNotifications() {
 		String res = "";
 		Iterator<Notification> iterator = _notifications.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			Notification notification = iterator.next();
 			res += notification.getMessage();
 			iterator.remove();
@@ -83,9 +83,25 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 
 	public void update(Notification notification) {
 		_notifications.add(notification);
-	} 
+	}
 
+	protected Project getProject(String disciplineName, String projectName)
+			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
+		Discipline discipline = getDiscipline(disciplineName);
+		if (discipline == null) {
+			throw new NoSuchDisciplineIdException(disciplineName);
+		}
 
+		Project project = discipline.getProjects().get(projectName);
+		if (project == null) {
+			throw new NoSuchProjectIdException(projectName);
+		}
+		return project;
+	}
+
+	String surveyResultsFormat(int numberSubmission, int numberAnswers, int min, int max, int avg) {
+		return "";
+	}
 
 	abstract Discipline getDiscipline(String disciplineName);
 

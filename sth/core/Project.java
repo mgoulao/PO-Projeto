@@ -43,12 +43,14 @@ public class Project implements java.io.Serializable {
 	 * Closes project
 	 */
 	void close(String disciplineName) {
-		_closed = true;
-		if (_survey != null) {
-			try {
-				_survey.open(disciplineName, this);
-			} catch (ProjectException e) {
-				// TODO: Verificar isto -> Esta excessao nunca ocorre
+		if (!isClosed()) {
+			_closed = true;
+			if (_survey != null) {
+				try {
+					_survey.open(disciplineName, this);
+				} catch (Exception e) {
+					// Nenhuma das excessoes ocorre
+				}
 			}
 		}
 	}
