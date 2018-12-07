@@ -12,7 +12,7 @@ import sth.core.exception.NoSuchDisciplineIdException;
  */
 public class DoShowDisciplineSurveys extends Command<SchoolManager> {
 
-  Input<String> _discipline;
+  private Input<String> _discipline;
 
   /**
    * @param receiver

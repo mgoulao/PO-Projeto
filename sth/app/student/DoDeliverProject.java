@@ -12,7 +12,7 @@ import sth.core.exception.NoSuchDisciplineIdException;
  */
 public class DoDeliverProject extends sth.app.common.ProjectCommand {
 
-	Input<String> _answer;
+	private Input<String> _answer;
 
 	/**
 	 * @param receiver
