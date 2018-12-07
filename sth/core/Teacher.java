@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import sth.core.Course;
@@ -70,7 +71,7 @@ public class Teacher extends Person implements java.io.Serializable {
 
 	/**
 	 * @param p
-	 * @return Map with submissions
+	 * @return Collection with submissions
 	 */
 	Collection<Submission> seeResults(Project p) {
 		return p.getSubmissions();
@@ -118,16 +119,31 @@ public class Teacher extends Person implements java.io.Serializable {
 		return disciplines;
 	}
 
+	/**
+	 * @param numberSubmission
+	 * @param numberAnswers
+	 * @param min
+	 * @param max
+	 * @param avg
+	 * @return String with survey results
+	 */
 	@Override
 	String surveyResultsFormat(int numberSubmission, int numberAnswers, int min, int max, int avg) {
 		String res = "";
 		res += "\n * Número de submissões: " + numberSubmission + "\n";
 		res += " * Número de respostas: " + numberAnswers + "\n";
-		res += " * Tempos de resolução (horas) (mínimo, médio, máximo): " + min + ", "
-				+ avg + ", " + max + "\n";
+		res += " * Tempos de resolução (horas) (mínimo, médio, máximo): " + min + ", " + avg + ", " + max + "\n";
 		return res;
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return survey results
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws NoSurveyException
+	 */
 	String showSurveyResults(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
 		Project project = getProject(disciplineName, projectName);
@@ -159,11 +175,17 @@ public class Teacher extends Person implements java.io.Serializable {
 		discipline.addTeacher(this);
 	}
 
+	/**
+	 * @return person type
+	 */
 	@Override
 	protected String getPersonType() {
 		return "DOCENTE";
 	}
 
+	/**
+	 * @return string with disciplines
+	 */
 	@Override
 	protected String getPersonDisciplines() {
 		String res = "";

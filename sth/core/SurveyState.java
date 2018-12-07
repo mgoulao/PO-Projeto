@@ -11,6 +11,9 @@ public abstract class SurveyState implements java.io.Serializable {
 
 	protected Survey _survey;
 
+	/**
+	 * @param survey
+	 */
 	SurveyState(Survey survey) {
 		_survey = survey;
 	}
@@ -26,6 +29,13 @@ public abstract class SurveyState implements java.io.Serializable {
 	abstract void submit(String disciplineName, Project project, Student student, int time, String comment)
 			throws NoSurveyException, NoSuchProjectException;
 
+	/**
+	 * @param person
+	 * @param disciplineName
+	 * @param project
+	 * @param smallFormat
+	 * @return survey results
+	 */
 	String getResults(Person person, String disciplineName, Project project, boolean smallFormat) {
 		return disciplineName + " - " + project.getName();
 	}

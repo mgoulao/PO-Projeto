@@ -3,19 +3,20 @@ package sth.core;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-
+import java.util.List;
 import java.util.ArrayList;
 
 import sth.core.exception.*;
 
-public abstract class Person implements Comparable<Person>, java.io.Serializable {
+public abstract class Person implements Comparable<Person>, java.io.Serializable, Observer {
 
 	private static final long serialVersionUID = 201811111802L;
+
+	private List<Notification> _notifications = new ArrayList<>();
 
 	private String _name;
 	private int _id;
 	private int _phoneNumber;
-	private Collection<Notification> _notifications = new ArrayList<>();
 
 	/**
 	 * @param id
@@ -68,27 +69,6 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 	 */
 	public void setName(String name) {
 		_name = name;
-	}
-
-	/**
-	 * @return String with notifications
-	 */
-	public String getNotifications() {
-		String res = "";
-		Iterator<Notification> iterator = _notifications.iterator();
-		while (iterator.hasNext()) {
-			Notification notification = iterator.next();
-			res += notification.getMessage();
-			iterator.remove();
-		}
-		return res;
-	}
-
-	/**
-	 * @param notification
-	 */
-	public void update(Notification notification) {
-		_notifications.add(notification);
 	}
 
 	/**
@@ -172,5 +152,27 @@ public abstract class Person implements Comparable<Person>, java.io.Serializable
 		else if (_id == other.getID())
 			return 0;
 		return 1;
+	}
+
+	/**
+	 * @param notification
+	 */
+	@Override
+	public void update(Notification notification) {
+		_notifications.add(notification);
+	}
+
+	/**
+	 * @return String with notifications
+	 */
+	public String getNotifications() {
+		String res = "";
+		Iterator<Notification> iterator = _notifications.iterator();
+		while (iterator.hasNext()) {
+			Notification notification = iterator.next();
+			res += notification.getMessage();
+			iterator.remove();
+		}
+		return res;
 	}
 }

@@ -20,7 +20,7 @@ import sth.core.Submission;
 import sth.core.Answer;
 import sth.core.Course;
 
-public class Student extends Person implements java.io.Serializable {
+public class Student extends Person implements java.io.Serializable, Observer {
 
 	private static final long serialVersionUID = 201811111805L;
 
@@ -91,6 +91,13 @@ public class Student extends Person implements java.io.Serializable {
 			throw new NoSuchProjectIdException(projectName);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return Project
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 */
 	private Project getCourseProject(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException {
 		Course course = getCourse();
@@ -120,6 +127,15 @@ public class Student extends Person implements java.io.Serializable {
 		survey.submitAnswer(disciplineName, project, this, time, comment);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws DuplicateSurveyException
+	 * @throws SurveyFinishedException
+	 * @throws OpeningSurveyException
+	 */
 	void createSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		if (isRepresentative()) {
@@ -134,7 +150,7 @@ public class Student extends Person implements java.io.Serializable {
 				throw new NoSuchProjectIdException(projectName);
 			}
 
-			Collection<Person> observers = new TreeSet<>();
+			Collection<Observer> observers = new TreeSet<>();
 			observers.addAll(discipline.getStudents());
 			observers.addAll(discipline.getTeachers());
 			observers.addAll(course.getRepresentatives());
@@ -143,6 +159,15 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws SurveyFinishedException
+	 * @throws NonEmptySurveyException
+	 * @throws NoSurveyException
+	 */
 	public void cancelSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, NonEmptySurveyException, NoSurveyException {
 		if (isRepresentative()) {
@@ -154,6 +179,15 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws SurveyFinishedException
+	 * @throws OpeningSurveyException
+	 * @throws NoSurveyException
+	 */
 	public void openSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, OpeningSurveyException, NoSurveyException {
 		if (isRepresentative()) {
@@ -165,6 +199,15 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws SurveyFinishedException
+	 * @throws ClosingSurveyException
+	 * @throws NoSurveyException
+	 */
 	public void closeSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
 			NoSuchProjectIdException, SurveyFinishedException, ClosingSurveyException, NoSurveyException {
 		if (isRepresentative()) {
@@ -176,6 +219,14 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws FinishingSurveyException
+	 * @throws NoSurveyException
+	 */
 	public void finalizeSurvey(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, FinishingSurveyException, NoSurveyException {
 		if (isRepresentative()) {
@@ -187,6 +238,14 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @param disciplineName
+	 * @param projectName
+	 * @return
+	 * @throws NoSuchDisciplineIdException
+	 * @throws NoSuchProjectIdException
+	 * @throws NoSurveyException
+	 */
 	public String showSurveyResults(String disciplineName, String projectName)
 			throws NoSuchDisciplineIdException, NoSuchProjectIdException, NoSurveyException {
 		Project project = getProject(disciplineName, projectName);
@@ -196,6 +255,11 @@ public class Student extends Person implements java.io.Serializable {
 		return survey.getResultsFor(this, disciplineName, project, false);
 	}
 
+	/**
+	 * @param disciplineName
+	 * @return
+	 * @throws NoSuchDisciplineIdException
+	 */
 	public String showDisciplineSurveyResults(String disciplineName) throws NoSuchDisciplineIdException {
 		String res = "";
 		if (isRepresentative()) {
@@ -221,15 +285,30 @@ public class Student extends Person implements java.io.Serializable {
 		_disciplines.put(d.getName(), d);
 	}
 
+	/**
+	 * @return Map with disciplines
+	 */
 	Map<String, Discipline> getDisciplines() {
 		return _disciplines;
 	}
 
+	/**
+	 * @param disciplineName
+	 * @return Discipline
+	 */
 	@Override
 	Discipline getDiscipline(String disciplineName) {
 		return getDisciplines().get(disciplineName);
 	}
 
+	/**
+	 * @param numberSubmission
+	 * @param numberAnswers
+	 * @param min
+	 * @param max
+	 * @param avg
+	 * @return survey results
+	 */
 	@Override
 	String surveyResultsFormat(int numberSubmission, int numberAnswers, int min, int max, int avg) {
 		String res = "";
@@ -262,6 +341,9 @@ public class Student extends Person implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * @return person type
+	 */
 	@Override
 	protected String getPersonType() {
 		String res = "";
@@ -272,6 +354,9 @@ public class Student extends Person implements java.io.Serializable {
 		return res;
 	}
 
+	/**
+	 * @return String with disciplines
+	 */
 	@Override
 	protected String getPersonDisciplines() {
 		String res = "";

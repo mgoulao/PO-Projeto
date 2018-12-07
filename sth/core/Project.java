@@ -113,7 +113,7 @@ public class Project implements java.io.Serializable {
 	 * @throws SurveyFinishedException
 	 * @throws OpeningSurveyException
 	 */
-	void addSurvey(String disciplineName, Collection<Person> observers)
+	void addSurvey(String disciplineName, Collection<Observer> observers)
 			throws DuplicateSurveyException, SurveyFinishedException, OpeningSurveyException {
 		if (_survey != null) {
 			throw new DuplicateSurveyException(disciplineName, _name);
