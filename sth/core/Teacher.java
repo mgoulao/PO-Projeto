@@ -150,7 +150,7 @@ public class Teacher extends Person implements java.io.Serializable {
 		Survey survey = project.getSurvey();
 		if (survey == null)
 			throw new NoSurveyException(disciplineName, projectName);
-		return survey.getResultsFor(this, disciplineName, project, true);
+		return survey.getResultsFor(this, disciplineName, project, false);
 	}
 
 	/**

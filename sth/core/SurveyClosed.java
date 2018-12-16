@@ -1,7 +1,6 @@
 package sth.core;
 
 import sth.core.exception.NoSurveyException;
-import sth.core.exception.ProjectException;
 
 public class SurveyClosed extends SurveyState implements java.io.Serializable {
 
@@ -28,6 +27,7 @@ public class SurveyClosed extends SurveyState implements java.io.Serializable {
 	 */
 	void open(String disciplineName, Project project) {
 		_survey.setState(new SurveyOpen(_survey));
+		_survey.createMessage("Pode preencher inquérito do projecto "+ project.getName() +" da disciplina "+ disciplineName+ "\n");
 	}
 
 	/**

@@ -3,8 +3,6 @@ package sth.core;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import sth.core.Person;
-
 public abstract class Observable implements java.io.Serializable {
 
 	private static final long serialVersionUID = 201811111809L;

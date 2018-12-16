@@ -1,22 +1,11 @@
 package sth.core;
 
 import sth.core.exception.BadEntryException;
-import sth.core.exception.NoSuchPersonIdException;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-import sth.core.exception.ImportFileException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**

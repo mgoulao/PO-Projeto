@@ -1,12 +1,10 @@
 package sth.core;
 
-import sth.core.exception.OpeningSurveyException;
-import sth.core.exception.ProjectException;
+import sth.core.Project;
 import sth.core.exception.ClosingSurveyException;
 import sth.core.exception.FinishingSurveyException;
 import sth.core.exception.NoSurveyException;
-
-import sth.core.Project;
+import sth.core.exception.OpeningSurveyException;
 
 public class SurveyCreated extends SurveyState implements java.io.Serializable {
 

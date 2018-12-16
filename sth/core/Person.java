@@ -1,12 +1,10 @@
 package sth.core;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-
 import sth.core.exception.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class Person implements Comparable<Person>, java.io.Serializable, Observer {
 

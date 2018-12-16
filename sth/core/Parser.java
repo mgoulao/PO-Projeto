@@ -1,15 +1,10 @@
 package sth.core;
 
-import java.io.IOException;
-import java.io.StreamTokenizer;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.Reader;
-
-import java.util.Collection;
-import java.util.ArrayList;
-
 import sth.core.exception.BadEntryException;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Parser {
 

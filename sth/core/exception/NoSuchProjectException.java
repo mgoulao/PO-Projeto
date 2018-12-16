@@ -1,7 +1,5 @@
 package sth.core.exception;
 
-import pt.tecnico.po.ui.DialogException;
-
 /**
  *
  */

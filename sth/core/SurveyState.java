@@ -20,9 +20,9 @@ public abstract class SurveyState implements java.io.Serializable {
 
 	abstract void cancel(String disciplineName, Project project) throws SurveyFinishedException, NonEmptySurveyException;
 
-	abstract void open(String disciplineName, Project project) throws SurveyFinishedException, OpeningSurveyException;
+	abstract void open(String disciplineName, Project project) throws OpeningSurveyException;
 
-	abstract void close(String disciplineName, Project project) throws SurveyFinishedException, ClosingSurveyException;
+	abstract void close(String disciplineName, Project project) throws ClosingSurveyException;
 
 	abstract void finalizeSurvey(String disciplineName, Project project) throws FinishingSurveyException;
 

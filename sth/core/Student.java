@@ -1,24 +1,14 @@
 package sth.core;
 
-import sth.core.exception.*;
-
-import sth.core.Discipline;
-import sth.core.Submission;
-import sth.core.Answer;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.ArrayList;
-import java.util.Collection;
-
+import sth.core.Course;
 import sth.core.Discipline;
 import sth.core.Survey;
-import sth.core.Submission;
-import sth.core.Answer;
-import sth.core.Course;
+import sth.core.exception.*;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Student extends Person implements java.io.Serializable, Observer {
 
@@ -189,7 +179,7 @@ public class Student extends Person implements java.io.Serializable, Observer {
 	 * @throws NoSurveyException
 	 */
 	public void openSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
-			NoSuchProjectIdException, SurveyFinishedException, OpeningSurveyException, NoSurveyException {
+			NoSuchProjectIdException, OpeningSurveyException, NoSurveyException {
 		if (isRepresentative()) {
 			Project project = getCourseProject(disciplineName, projectName);
 			Survey survey = project.getSurvey();
@@ -209,7 +199,7 @@ public class Student extends Person implements java.io.Serializable, Observer {
 	 * @throws NoSurveyException
 	 */
 	public void closeSurvey(String disciplineName, String projectName) throws NoSuchDisciplineIdException,
-			NoSuchProjectIdException, SurveyFinishedException, ClosingSurveyException, NoSurveyException {
+			NoSuchProjectIdException, ClosingSurveyException, NoSurveyException {
 		if (isRepresentative()) {
 			Project project = getCourseProject(disciplineName, projectName);
 			Survey survey = project.getSurvey();

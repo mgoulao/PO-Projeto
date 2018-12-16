@@ -1,13 +1,10 @@
 package sth.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
-
+import sth.core.Answer;
 import sth.core.exception.*;
 
-import sth.core.Answer;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Survey extends Observable implements java.io.Serializable {
 
@@ -46,20 +43,18 @@ public class Survey extends Observable implements java.io.Serializable {
 	/**
 	 * @param disciplineName
 	 * @param project
-	 * @throws SurveyFinishedException
 	 * @throws OpeningSurveyException
 	 */
-	void open(String disciplineName, Project project) throws SurveyFinishedException, OpeningSurveyException {
+	void open(String disciplineName, Project project) throws OpeningSurveyException {
 		_state.open(disciplineName, project);
 	}
 
 	/**
 	 * @param disciplineName
 	 * @param project
-	 * @throws SurveyFinishedException
 	 * @throws ClosingSurveyException
 	 */
-	void close(String disciplineName, Project project) throws SurveyFinishedException, ClosingSurveyException {
+	void close(String disciplineName, Project project) throws ClosingSurveyException {
 		_state.close(disciplineName, project);
 	}
 

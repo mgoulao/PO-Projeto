@@ -1,35 +1,15 @@
 package sth.core;
 
-import sth.core.exception.BadEntryException;
-import sth.core.exception.ImportFileException;
-import sth.core.exception.NoSuchDisciplineIdException;
-import sth.core.exception.NoSuchPersonIdException;
-import sth.core.exception.NoSuchProjectIdException;
+import sth.core.Employee;
+import sth.core.Student;
+import sth.core.Teacher;
+import sth.core.exception.*;
 
-import java.io.IOException;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-
-import sth.core.Teacher;
-import sth.core.Student;
-import sth.core.exception.*;
-import sth.core.Employee;
+import java.util.List;
 
 /**
  * The façade class.

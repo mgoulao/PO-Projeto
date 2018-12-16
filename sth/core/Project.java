@@ -1,17 +1,12 @@
 package sth.core;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Set;
-import java.util.TreeSet;
-
-import sth.core.exception.*;
 import sth.core.Student;
 import sth.core.Submission;
+import sth.core.exception.*;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 public class Project implements java.io.Serializable {
 

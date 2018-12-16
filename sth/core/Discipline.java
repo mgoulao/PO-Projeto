@@ -1,15 +1,13 @@
 package sth.core;
 
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.TreeSet;
-import java.util.ArrayList;
-import java.util.Collections;
-
+import sth.core.Project;
 import sth.core.Student;
 import sth.core.Teacher;
-import sth.core.Project;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Discipline implements Comparable<Discipline>, java.io.Serializable {

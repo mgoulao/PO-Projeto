@@ -1,10 +1,7 @@
 package sth.core;
 
-import sth.core.exception.ProjectException;
-import sth.core.exception.SurveyFinishedException;
-import sth.core.exception.NoSurveyException;
-
 import sth.core.Student;
+import sth.core.exception.*;
 
 public class SurveyFinalized extends SurveyState implements java.io.Serializable {
 
@@ -29,19 +26,19 @@ public class SurveyFinalized extends SurveyState implements java.io.Serializable
 	/**
 	 * @param disciplineName
 	 * @param project
-	 * @throws SurveyFinishedException
+	 * @throws OpeningSurveyException
 	 */
-	void open(String disciplineName, Project project) throws SurveyFinishedException {
-		throw new SurveyFinishedException(disciplineName, project.getName());
+	void open(String disciplineName, Project project) throws OpeningSurveyException {
+		throw new OpeningSurveyException(disciplineName, project.getName());
 	}
 
 	/**
 	 * @param disciplineName
 	 * @param project
-	 * @throws SurveyFinishedException
+	 * @throws ClosingSurveyException
 	 */
-	void close(String disciplineName, Project project) throws SurveyFinishedException {
-		throw new SurveyFinishedException(disciplineName, project.getName());
+	void close(String disciplineName, Project project) throws ClosingSurveyException {
+		throw new ClosingSurveyException(disciplineName, project.getName());
 	}
 
 	/**
@@ -77,7 +74,7 @@ public class SurveyFinalized extends SurveyState implements java.io.Serializable
 		if (smallFormat) {
 			res += " - " + _survey.getNumberAnswers() + " respostas - " + _survey.getAvgTime() + " horas\n";
 		} else {
-			person.surveyResultsFormat(project.getNumberSubmissions(), _survey.getNumberAnswers(), _survey.getMinTime(),
+			res += person.surveyResultsFormat(project.getNumberSubmissions(), _survey.getNumberAnswers(), _survey.getMinTime(),
 					_survey.getMaxTime(), _survey.getAvgTime());
 		}
 		return res;

@@ -1,12 +1,7 @@
 package sth.core;
 
-import sth.core.exception.NonEmptySurveyException;
-import sth.core.exception.ProjectException;
-import sth.core.exception.FinishingSurveyException;
-import sth.core.exception.NoSuchProjectException;
-import sth.core.exception.NoSurveyException;
-
 import sth.core.Project;
+import sth.core.exception.*;
 
 public class SurveyOpen extends SurveyState implements java.io.Serializable {
 
@@ -35,8 +30,8 @@ public class SurveyOpen extends SurveyState implements java.io.Serializable {
 	 * @param disciplineName
 	 * @param project
 	 */
-	void open(String disciplineName, Project project) {
-		// Open Project stays closed
+	void open(String disciplineName, Project project) throws OpeningSurveyException {
+		throw new OpeningSurveyException(disciplineName, project.getName());
 	}
 
 	/**
